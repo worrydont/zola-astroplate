@@ -1,5 +1,8 @@
+{% set tokens = load_data(path="themes/zola-astroplate/data/tokens.toml") %}
+
 {% if config.extra.theme %}
   {% set theme = config.extra.theme %}
+
   {% if theme.font_primary_link or theme.font_secondary_link %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,30 +16,14 @@
 
   <style id="theme-override-styles">
     :root {
-      {% if theme.primary %}--color-primary: {{ theme.primary }} !important;{% endif %}
-      {% if theme.body %}--color-body: {{ theme.body }} !important;{% endif %}
-      {% if theme.border %}--color-border: {{ theme.border }} !important;{% endif %}
-      {% if theme.light %}--color-light: {{ theme.light }} !important;{% endif %}
-      {% if theme.dark %}--color-dark: {{ theme.dark }} !important;{% endif %}
-      {% if theme.text %}--color-text: {{ theme.text }} !important;{% endif %}
-      {% if theme.text_dark %}--color-text-dark: {{ theme.text_dark }} !important;{% endif %}
-      {% if theme.text_light %}--color-text-light: {{ theme.text_light }} !important;{% endif %}
-      {% if theme.font_primary %}--font-primary: {{ theme.font_primary }} !important;{% endif %}
-      {% if theme.font_secondary %}--font-secondary: {{ theme.font_secondary }} !important;{% endif %}
+      {% for token in tokens.tokens %}{% if token.group == "light" or token.group == "font" %}{% if theme[token.key] %}
+      {{ token.css_var }}: {{ theme[token.key] }};
+      {% endif %}{% endif %}{% endfor %}
     }
     .dark {
-      {% if theme.darkmode_primary %}--color-darkmode-primary: {{ theme.darkmode_primary }} !important;{% endif %}
-      {% if theme.darkmode_body %}--color-darkmode-body: {{ theme.darkmode_body }} !important;{% endif %}
-      {% if theme.darkmode_border %}--color-darkmode-border: {{ theme.darkmode_border }} !important;{% endif %}
-      {% if theme.darkmode_light %}--color-darkmode-light: {{ theme.darkmode_light }} !important;{% endif %}
-      {% if theme.darkmode_dark %}--color-darkmode-dark: {{ theme.darkmode_dark }} !important;{% endif %}
-      {% if theme.darkmode_text %}--color-darkmode-text: {{ theme.darkmode_text }} !important;{% endif %}
-      {% if theme.darkmode_text_dark %}--color-darkmode-text-dark: {{ theme.darkmode_text_dark }} !important;{% endif %}
-      {% if theme.darkmode_text_light %}--color-darkmode-text-light: {{ theme.darkmode_text_light }} !important;{% endif %}
+      {% for token in tokens.tokens %}{% if token.group == "dark" %}{% if theme[token.key] %}
+      {{ token.css_var }}: {{ theme[token.key] }};
+      {% endif %}{% endif %}{% endfor %}
     }
   </style>
-{% else %}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600&family=Signika:wght@500;700&display=swap" rel="stylesheet">
 {% endif %}

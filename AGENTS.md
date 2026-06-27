@@ -38,7 +38,30 @@ mise run css:watch   # rebuild on change
 mise run dev         # pitchfork start css  — background Tailwind watcher (pitchfork.toml)
 mise run stop        # stop the background watcher
 ```
-Then run `zola serve` from the consuming site to preview. Zola dev server uses port **1111**.
+Then run `mise run serve` from the consuming site (`worrydont-zola/`) to preview — starts the pitchfork background daemon on port **1111**. Use `mise run stop` to stop it.
+
+## Browser testing with playwright-cli
+
+Use the `/playwright-cli` skill (`~/.claude/skills/playwright-cli/scripts/pw`).
+
+**Setup gotcha:** `playwright-cli` defaults to Google Chrome at `/opt/google/chrome` which is not installed. Always pass `--browser chromium`:
+```bash
+~/.claude/skills/playwright-cli/scripts/pw open --browser chromium http://127.0.0.1:1111/
+```
+
+The theme is not self-servable — always test via the consuming site's dev server (`mise run serve` from `worrydont-zola/`, port 1111).
+
+**Efficient pattern:**
+1. Start server: `mise run serve` (pitchfork waits until port 1111 is ready — no manual sleep needed).
+2. `scripts/pw open --browser chromium URL` — inline snapshot, no extra Read needed.
+4. Read refs from snapshot (`e160`, `e178` …) and interact: `scripts/pw click e160`, `scripts/pw fill e178 "#ff0000"`, `scripts/pw reload`.
+5. For JS assertions, use `playwright-cli run-code` directly (return value appears as `### Result`):
+   ```bash
+   playwright-cli run-code "async page => page.evaluate(() => document.documentElement.style.getPropertyValue('--color-primary'))"
+   ```
+6. Stop server when done: `mise run stop`.
+
+**`run-code` rule:** anything touching the DOM (`getComputedStyle`, `sessionStorage`, etc.) must go inside `page.evaluate(() => ...)` — those globals are not available in the outer `run-code` scope.
 
 ## Conventions / hard rules
 - **OpenSpec**: This project uses OpenSpec for feature work. Do not write code immediately; use `/opsx-explore` to discuss ideas, or `/opsx-propose` to create a plan and artifacts before implementing.

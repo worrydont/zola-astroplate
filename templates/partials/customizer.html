@@ -1,5 +1,5 @@
-{% if config.extra.theme and config.extra.theme.customizer_enabled %}
-{% set theme = config.extra.theme | default(value=false) %}
+{% set tokens = load_data(path="themes/zola-astroplate/data/tokens.toml") %}
+
 {% set show_banner = true %}
 {% if config.extra.sections and config.extra.sections.banner is defined %}
   {% set show_banner = config.extra.sections.banner %}
@@ -16,119 +16,132 @@
 {% if config.extra.sections and config.extra.sections.cta is defined %}
   {% set show_cta = config.extra.sections.cta %}
 {% endif %}
+
 <div x-data="{
   open: false,
   activeTab: 'light',
   copied: false,
-  colors: {
-    primary: '{% if theme and theme.primary %}{{ theme.primary }}{% else %}#121212{% endif %}',
-    body: '{% if theme and theme.body %}{{ theme.body }}{% else %}#ffffff{% endif %}',
-    border: '{% if theme and theme.border %}{{ theme.border }}{% else %}#eaeaea{% endif %}',
-    light: '{% if theme and theme.light %}{{ theme.light }}{% else %}#f6f6f6{% endif %}',
-    dark: '{% if theme and theme.dark %}{{ theme.dark }}{% else %}#040404{% endif %}',
-    text: '{% if theme and theme.text %}{{ theme.text }}{% else %}#444444{% endif %}',
-    text_dark: '{% if theme and theme.text_dark %}{{ theme.text_dark }}{% else %}#040404{% endif %}',
-    text_light: '{% if theme and theme.text_light %}{{ theme.text_light }}{% else %}#717171{% endif %}'
+  STORAGE_KEY: 'zola-theme-customizer-draft',
+
+  registry: [{% for token in tokens.tokens %}
+    { key: '{{ token.key }}', cssVar: '{{ token.css_var }}', group: '{{ token.group }}' },{% endfor %}
+  ],
+
+  values: {},
+
+  configuredSections: {
+    banner: {% if show_banner %}true{% else %}false{% endif %},
+    features: {% if show_features %}true{% else %}false{% endif %},
+    testimonials: {% if show_testimonials %}true{% else %}false{% endif %},
+    cta: {% if show_cta %}true{% else %}false{% endif %}
   },
-  darkmode: {
-    primary: '{% if theme and theme.darkmode_primary %}{{ theme.darkmode_primary }}{% else %}#ffffff{% endif %}',
-    body: '{% if theme and theme.darkmode_body %}{{ theme.darkmode_body }}{% else %}#1c1c1c{% endif %}',
-    border: '{% if theme and theme.darkmode_border %}{{ theme.darkmode_border }}{% else %}#3E3E3E{% endif %}',
-    light: '{% if theme and theme.darkmode_light %}{{ theme.darkmode_light }}{% else %}#222222{% endif %}',
-    dark: '{% if theme and theme.darkmode_dark %}{{ theme.darkmode_dark }}{% else %}#ffffff{% endif %}',
-    text: '{% if theme and theme.darkmode_text %}{{ theme.darkmode_text }}{% else %}#B4AFB6{% endif %}',
-    text_dark: '{% if theme and theme.darkmode_text_dark %}{{ theme.darkmode_text_dark }}{% else %}#ffffff{% endif %}',
-    text_light: '{% if theme and theme.darkmode_text_light %}{{ theme.darkmode_text_light }}{% else %}#B4AFB6{% endif %}'
-  },
-  font_primary: '{% if theme and theme.font_primary %}{{ theme.font_primary }}{% else %}Heebo, sans-serif{% endif %}',
-  font_secondary: '{% if theme and theme.font_secondary %}{{ theme.font_secondary }}{% else %}Signika, sans-serif{% endif %}',
+
   sections: {
     banner: {% if show_banner %}true{% else %}false{% endif %},
     features: {% if show_features %}true{% else %}false{% endif %},
     testimonials: {% if show_testimonials %}true{% else %}false{% endif %},
     cta: {% if show_cta %}true{% else %}false{% endif %}
   },
-  toggleSection(name) {
-    const el = document.getElementById(`section-${name}`);
-    if (el) {
-      el.style.display = this.sections[name] ? '' : 'none';
-    }
-  },
+
   init() {
-    this.refreshOverrideTag();
-  },
-  refreshOverrideTag() {
-    let styleTag = document.getElementById('theme-override-styles');
-    if (!styleTag) {
-      styleTag = document.createElement('style');
-      styleTag.id = 'theme-override-styles';
-      document.head.appendChild(styleTag);
+    const stored = sessionStorage.getItem(this.STORAGE_KEY);
+    if (stored) {
+      try {
+        const draft = JSON.parse(stored);
+        if (draft.values) {
+          this.values = draft.values;
+          Object.entries(draft.values).forEach(([cssVar, val]) => {
+            document.documentElement.style.setProperty(cssVar, val);
+          });
+        }
+        if (draft.sections) {
+          this.sections = Object.assign({}, this.sections, draft.sections);
+          Object.entries(this.sections).forEach(([id, enabled]) => {
+            this._applySection(id, enabled);
+          });
+        }
+      } catch (e) {
+        sessionStorage.removeItem(this.STORAGE_KEY);
+        this._seedFromComputed();
+      }
+    } else {
+      this._seedFromComputed();
     }
-    styleTag.innerHTML = `
-      :root {
-        --color-primary: ${this.colors.primary} !important;
-        --color-body: ${this.colors.body} !important;
-        --color-border: ${this.colors.border} !important;
-        --color-light: ${this.colors.light} !important;
-        --color-dark: ${this.colors.dark} !important;
-        --color-text: ${this.colors.text} !important;
-        --color-text-dark: ${this.colors.text_dark} !important;
-        --color-text-light: ${this.colors.text_light} !important;
-        --font-primary: ${this.font_primary} !important;
-        --font-secondary: ${this.font_secondary} !important;
-      }
-      .dark {
-        --color-darkmode-primary: ${this.darkmode.primary} !important;
-        --color-darkmode-body: ${this.darkmode.body} !important;
-        --color-darkmode-border: ${this.darkmode.border} !important;
-        --color-darkmode-light: ${this.darkmode.light} !important;
-        --color-darkmode-dark: ${this.darkmode.dark} !important;
-        --color-darkmode-text: ${this.darkmode.text} !important;
-        --color-darkmode-text-dark: ${this.darkmode.text_dark} !important;
-        --color-darkmode-text-light: ${this.darkmode.text_light} !important;
-      }
-    `;
   },
-  getToml() {
-    return '[extra.theme]\n' +
-      '# Light mode colors\n' +
-      `primary = '${this.colors.primary}'\n` +
-      `body = '${this.colors.body}'\n` +
-      `border = '${this.colors.border}'\n` +
-      `light = '${this.colors.light}'\n` +
-      `dark = '${this.colors.dark}'\n` +
-      `text = '${this.colors.text}'\n` +
-      `text_dark = '${this.colors.text_dark}'\n` +
-      `text_light = '${this.colors.text_light}'\n\n` +
-      '# Dark mode colors\n' +
-      `darkmode_primary = '${this.darkmode.primary}'\n` +
-      `darkmode_body = '${this.darkmode.body}'\n` +
-      `darkmode_border = '${this.darkmode.border}'\n` +
-      `darkmode_light = '${this.darkmode.light}'\n` +
-      `darkmode_dark = '${this.darkmode.dark}'\n` +
-      `darkmode_text = '${this.darkmode.text}'\n` +
-      `darkmode_text_dark = '${this.darkmode.text_dark}'\n` +
-      `darkmode_text_light = '${this.darkmode.text_light}'\n\n` +
-      '# Fonts\n' +
-      `font_primary = '${this.font_primary}'\n` +
-      `font_secondary = '${this.font_secondary}'\n\n` +
-      '[extra.sections]\n' +
-      `banner = ${this.sections.banner}\n` +
-      `features = ${this.sections.features}\n` +
-      `testimonials = ${this.sections.testimonials}\n` +
-      `cta = ${this.sections.cta}`;
+
+  _seedFromComputed() {
+    const computed = getComputedStyle(document.documentElement);
+    this.registry.forEach(token => {
+      this.values[token.cssVar] = computed.getPropertyValue(token.cssVar).trim();
+    });
   },
+
+  _applySection(id, enabled) {
+    const el = document.getElementById('section-' + id);
+    if (el) el.style.display = enabled ? '' : 'none';
+  },
+
+  _saveDraft() {
+    sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify({
+      values: this.values,
+      sections: this.sections
+    }));
+  },
+
+  onValueChange(cssVar) {
+    document.documentElement.style.setProperty(cssVar, this.values[cssVar]);
+    this._saveDraft();
+  },
+
+  onSectionChange(id) {
+    this._applySection(id, this.sections[id]);
+    this._saveDraft();
+  },
+
+  reset() {
+    sessionStorage.removeItem(this.STORAGE_KEY);
+    this.registry.forEach(token => {
+      document.documentElement.style.removeProperty(token.cssVar);
+    });
+    this._seedFromComputed();
+    this.sections = Object.assign({}, this.configuredSections);
+    Object.entries(this.sections).forEach(([id, enabled]) => {
+      this._applySection(id, enabled);
+    });
+  },
+
+  exportToml() {
+    let out = '[extra.theme]\n# Light mode colors\n';
+    this.registry.filter(t => t.group === 'light').forEach(t => {
+      out += t.key + ' = \'' + this.values[t.cssVar] + '\'\n';
+    });
+    out += '\n# Dark mode colors\n';
+    this.registry.filter(t => t.group === 'dark').forEach(t => {
+      out += t.key + ' = \'' + this.values[t.cssVar] + '\'\n';
+    });
+    out += '\n# Fonts\n';
+    this.registry.filter(t => t.group === 'font').forEach(t => {
+      out += t.key + ' = \'' + this.values[t.cssVar] + '\'\n';
+    });
+    out += '\n[extra.sections]\n';
+    Object.entries(this.sections).forEach(([id, val]) => {
+      out += id + ' = ' + val + '\n';
+    });
+    return out;
+  },
+
   copyToml() {
-    navigator.clipboard.writeText(this.getToml()).then(() => {
+    navigator.clipboard.writeText(this.exportToml()).then(() => {
       this.copied = true;
       setTimeout(() => this.copied = false, 2000);
     });
   }
 }" class="fixed bottom-6 right-6 z-[9999] flex flex-col items-end font-primary">
-  
+
   <!-- Trigger Button -->
-  <button 
-    @click="open = !open" 
+  <button
+    x-show="!open"
+    @click="open = !open"
     class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg transition hover:scale-105 hover:opacity-90 dark:bg-white dark:text-dark"
     title="Theme Customizer"
   >
@@ -138,8 +151,8 @@
   </button>
 
   <!-- Panel -->
-  <div 
-    x-show="open" 
+  <div
+    x-show="open"
     x-transition
     @click.away="open = false"
     class="mt-3 w-80 max-h-[75vh] overflow-y-auto rounded-xl border border-border bg-white/95 p-5 shadow-2xl backdrop-blur-md dark:border-darkmode-border dark:bg-darkmode-body/95 text-text dark:text-darkmode-text"
@@ -155,103 +168,82 @@
 
     <!-- Tabs -->
     <div class="mt-4 flex border-b border-border dark:border-darkmode-border">
-      <button 
+      <button
         @click="activeTab = 'light'"
         :class="activeTab === 'light' ? 'border-b-2 border-primary text-text-dark dark:border-white dark:text-white' : 'text-text-light dark:text-darkmode-text-light'"
         class="flex-1 pb-2 text-xs font-semibold transition"
-      >
-        Light mode
-      </button>
-      <button 
+      >Light mode</button>
+      <button
         @click="activeTab = 'dark'"
         :class="activeTab === 'dark' ? 'border-b-2 border-primary text-text-dark dark:border-white dark:text-white' : 'text-text-light dark:text-darkmode-text-light'"
         class="flex-1 pb-2 text-xs font-semibold transition"
-      >
-        Dark mode
-      </button>
-      <button 
+      >Dark mode</button>
+      <button
         @click="activeTab = 'fonts'"
         :class="activeTab === 'fonts' ? 'border-b-2 border-primary text-text-dark dark:border-white dark:text-white' : 'text-text-light dark:text-darkmode-text-light'"
         class="flex-1 pb-2 text-xs font-semibold transition"
-      >
-        Fonts
-      </button>
-      <button 
+      >Fonts</button>
+      <button
         @click="activeTab = 'sections'"
         :class="activeTab === 'sections' ? 'border-b-2 border-primary text-text-dark dark:border-white dark:text-white' : 'text-text-light dark:text-darkmode-text-light'"
         class="flex-1 pb-2 text-xs font-semibold transition"
-      >
-        Sections
-      </button>
+      >Sections</button>
     </div>
 
     <!-- Light mode tab -->
     <div x-show="activeTab === 'light'" class="mt-4 space-y-3">
-      <template x-for="(val, key) in colors">
-        <div class="flex items-center justify-between">
-          <label :for="'light-' + key" class="text-sm font-medium capitalize text-text-dark dark:text-darkmode-text" x-text="key.replace('_', ' ')"></label>
-          <div class="flex items-center space-x-2">
-            <input type="text" x-model="colors[key]" @input="refreshOverrideTag()" class="w-20 rounded border border-border px-1.5 py-0.5 text-xs dark:border-darkmode-border dark:bg-darkmode-light text-text-dark dark:text-white">
-            <input :id="'light-' + key" type="color" x-model="colors[key]" @input="refreshOverrideTag()" class="h-6 w-6 cursor-pointer border-0 p-0 bg-transparent">
-          </div>
+      <template x-for="token in registry.filter(t => t.group === 'light')" :key="token.cssVar">
+        <div class="flex items-center gap-2">
+          <input :id="'light-' + token.key" type="color" x-model="values[token.cssVar]" @input="onValueChange(token.cssVar)" class="h-6 w-6 shrink-0 cursor-pointer border-0 p-0 bg-transparent">
+          <label :for="'light-' + token.key" class="flex-1 text-sm font-medium capitalize text-text-dark dark:text-darkmode-text" x-text="token.key.replace(/_/g, ' ')"></label>
+          <input type="text" x-model="values[token.cssVar]" @input="onValueChange(token.cssVar)" class="w-20 shrink-0 rounded border border-border px-1.5 py-0.5 text-xs dark:border-darkmode-border dark:bg-darkmode-light text-text-dark dark:text-white">
         </div>
       </template>
     </div>
 
     <!-- Dark mode tab -->
     <div x-show="activeTab === 'dark'" class="mt-4 space-y-3">
-      <template x-for="(val, key) in darkmode">
-        <div class="flex items-center justify-between">
-          <label :for="'dark-' + key" class="text-sm font-medium capitalize text-text-dark dark:text-darkmode-text" x-text="key.replace('_', ' ')"></label>
-          <div class="flex items-center space-x-2">
-            <input type="text" x-model="darkmode[key]" @input="refreshOverrideTag()" class="w-20 rounded border border-border px-1.5 py-0.5 text-xs dark:border-darkmode-border dark:bg-darkmode-light text-text-dark dark:text-white">
-            <input :id="'dark-' + key" type="color" x-model="darkmode[key]" @input="refreshOverrideTag()" class="h-6 w-6 cursor-pointer border-0 p-0 bg-transparent">
-          </div>
+      <template x-for="token in registry.filter(t => t.group === 'dark')" :key="token.cssVar">
+        <div class="flex items-center gap-2">
+          <input :id="'dark-' + token.key" type="color" x-model="values[token.cssVar]" @input="onValueChange(token.cssVar)" class="h-6 w-6 shrink-0 cursor-pointer border-0 p-0 bg-transparent">
+          <label :for="'dark-' + token.key" class="flex-1 text-sm font-medium capitalize text-text-dark dark:text-darkmode-text" x-text="token.key.replace(/darkmode_/g, '').replace(/_/g, ' ')"></label>
+          <input type="text" x-model="values[token.cssVar]" @input="onValueChange(token.cssVar)" class="w-20 shrink-0 rounded border border-border px-1.5 py-0.5 text-xs dark:border-darkmode-border dark:bg-darkmode-light text-text-dark dark:text-white">
         </div>
       </template>
     </div>
 
     <!-- Fonts tab -->
     <div x-show="activeTab === 'fonts'" class="mt-4 space-y-3">
-      <div>
-        <label for="font-primary-input" class="block text-sm font-medium text-text-dark dark:text-darkmode-text">Primary Font</label>
-        <input id="font-primary-input" type="text" x-model="font_primary" @input="refreshOverrideTag()" class="mt-1 w-full rounded border border-border px-2 py-1 text-sm dark:border-darkmode-border dark:bg-darkmode-light text-text-dark dark:text-white">
-      </div>
-      <div>
-        <label for="font-secondary-input" class="block text-sm font-medium text-text-dark dark:text-darkmode-text">Secondary Font</label>
-        <input id="font-secondary-input" type="text" x-model="font_secondary" @input="refreshOverrideTag()" class="mt-1 w-full rounded border border-border px-2 py-1 text-sm dark:border-darkmode-border dark:bg-darkmode-light text-text-dark dark:text-white">
-      </div>
+      <template x-for="token in registry.filter(t => t.group === 'font')" :key="token.cssVar">
+        <div>
+          <label :for="'font-' + token.key" class="block text-sm font-medium text-text-dark dark:text-darkmode-text" x-text="token.key.replace(/_/g, ' ')"></label>
+          <input :id="'font-' + token.key" type="text" x-model="values[token.cssVar]" @input="onValueChange(token.cssVar)" class="mt-1 w-full rounded border border-border px-2 py-1 text-sm dark:border-darkmode-border dark:bg-darkmode-light text-text-dark dark:text-white">
+        </div>
+      </template>
     </div>
 
     <!-- Sections tab -->
     <div x-show="activeTab === 'sections'" class="mt-4 space-y-3">
-      <div class="flex items-center justify-between">
-        <label for="section-banner-checkbox" class="text-sm font-medium text-text-dark dark:text-darkmode-text">Banner Section</label>
-        <input id="section-banner-checkbox" type="checkbox" x-model="sections.banner" @change="toggleSection('banner')" class="h-4 w-4 cursor-pointer rounded border-border text-primary focus:ring-primary dark:border-darkmode-border dark:bg-darkmode-light">
-      </div>
-      <div class="flex items-center justify-between">
-        <label for="section-features-checkbox" class="text-sm font-medium text-text-dark dark:text-darkmode-text">Features Section</label>
-        <input id="section-features-checkbox" type="checkbox" x-model="sections.features" @change="toggleSection('features')" class="h-4 w-4 cursor-pointer rounded border-border text-primary focus:ring-primary dark:border-darkmode-border dark:bg-darkmode-light">
-      </div>
-      <div class="flex items-center justify-between">
-        <label for="section-testimonials-checkbox" class="text-sm font-medium text-text-dark dark:text-darkmode-text">Testimonials Section</label>
-        <input id="section-testimonials-checkbox" type="checkbox" x-model="sections.testimonials" @change="toggleSection('testimonials')" class="h-4 w-4 cursor-pointer rounded border-border text-primary focus:ring-primary dark:border-darkmode-border dark:bg-darkmode-light">
-      </div>
-      <div class="flex items-center justify-between">
-        <label for="section-cta-checkbox" class="text-sm font-medium text-text-dark dark:text-darkmode-text">CTA Section</label>
-        <input id="section-cta-checkbox" type="checkbox" x-model="sections.cta" @change="toggleSection('cta')" class="h-4 w-4 cursor-pointer rounded border-border text-primary focus:ring-primary dark:border-darkmode-border dark:bg-darkmode-light">
-      </div>
+      <template x-for="id in ['banner', 'features', 'testimonials', 'cta']" :key="id">
+        <div class="flex items-center justify-between">
+          <label :for="'section-' + id + '-checkbox'" class="text-sm font-medium capitalize text-text-dark dark:text-darkmode-text" x-text="id.charAt(0).toUpperCase() + id.slice(1) + ' Section'"></label>
+          <input :id="'section-' + id + '-checkbox'" type="checkbox" x-model="sections[id]" @change="onSectionChange(id)" class="h-4 w-4 cursor-pointer rounded border-border text-primary focus:ring-primary dark:border-darkmode-border dark:bg-darkmode-light">
+        </div>
+      </template>
     </div>
 
-    <!-- Export Section -->
-    <div class="mt-5 border-t border-border pt-4 dark:border-darkmode-border">
-      <button 
-        @click="copyToml()" 
-        class="flex w-full items-center justify-center rounded bg-primary py-2 text-sm font-semibold text-white shadow transition hover:opacity-90 dark:bg-white dark:text-dark"
+    <!-- Footer: Reset + Export -->
+    <div class="mt-5 border-t border-border pt-4 dark:border-darkmode-border flex gap-2">
+      <button
+        @click="reset()"
+        class="flex flex-1 items-center justify-center rounded border border-border py-2 text-sm font-semibold text-text-dark shadow-sm transition hover:bg-light dark:border-darkmode-border dark:text-darkmode-text dark:hover:bg-darkmode-light"
+      >Reset</button>
+      <button
+        @click="copyToml()"
+        class="flex flex-1 items-center justify-center rounded bg-primary py-2 text-sm font-semibold text-white shadow transition hover:opacity-90 dark:bg-white dark:text-dark"
       >
-        <span x-text="copied ? 'Copied TOML!' : 'Export Config (TOML)'"></span>
+        <span x-text="copied ? 'Copied!' : 'Export TOML'"></span>
       </button>
     </div>
   </div>
 </div>
-{% endif %}

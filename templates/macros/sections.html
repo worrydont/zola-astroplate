@@ -1,0 +1,30 @@
+{#
+  render(id, config_sections, section_extra, dev)
+
+  - prod (dev=false): disabled section is completely omitted
+  - dev  (dev=true):  disabled section is always emitted with display:none
+                      so the live customizer can toggle it via getElementById
+#}
+{% macro render(id, config_sections, section_extra, dev) %}
+  {% set enabled = true %}
+  {% if config_sections and config_sections[id] is defined %}
+    {% set enabled = config_sections[id] %}
+  {% endif %}
+  {% if section_extra[id] is defined and section_extra[id].enable is defined %}
+    {% set enabled = section_extra[id].enable %}
+  {% endif %}
+
+  {% if enabled or dev %}
+    <div id="section-{{ id }}"{% if not enabled %} style="display:none"{% endif %}>
+      {% if id == "banner" %}
+        {% if section_extra.banner %}{% include "partials/banner.html" %}{% endif %}
+      {% elif id == "features" %}
+        {% if section_extra.features %}{% include "partials/features.html" %}{% endif %}
+      {% elif id == "testimonials" %}
+        {% if section_extra.testimonials %}{% include "partials/testimonials.html" %}{% endif %}
+      {% elif id == "cta" %}
+        {% if section_extra.cta %}{% include "partials/cta.html" %}{% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro render %}

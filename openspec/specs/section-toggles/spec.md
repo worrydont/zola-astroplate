@@ -21,61 +21,44 @@ banner.enabled = false
 **AND** layout and styling for other sections are unaffected
 
 ### Requirement: Conditional Template Rendering
-The system SHALL check section toggle flags in Zola templates and render sections only if enabled.
+The system SHALL check section toggle flags via the shared macro and apply hybrid behavior: in production (no `ZOLA_ENV=dev`) a disabled section's wrapper and content SHALL be **completely omitted** from output; in development (`ZOLA_ENV=dev`) the wrapper SHALL always be emitted with `display:none` when disabled, so the customizer can toggle it live via `getElementById`.
 
-**Context**: Disabled sections must be completely omitted from HTML output, reducing file size and layout complexity.
+**Context**: Production output must stay minimal, while the dev customizer needs a present element to show/hide without a reload.
 
-#### Scenario: Enable features section by default
-**GIVEN** a site with no `[extra.sections]` configuration  
-**WHEN** the features section template checks:  
-```html
-{% if extra.sections.features.enabled | default(value=true) %}
-  {% include "partials/features.html" %}
-{% endif %}
-```
-**AND** the site is served  
-**THEN** the features section renders because the default is true  
-**AND** no `zola.toml` entry is required
+#### Scenario: Disabled section omitted in production
+- **WHEN** `zola.toml` sets `[extra.sections] banner = false` and the site is built via `mise run build`
+- **THEN** the generated homepage contains no `#section-banner` wrapper and no banner content
+
+#### Scenario: Disabled section hidden but present in dev
+- **GIVEN** `mise run serve` exports `ZOLA_ENV=dev`
+- **WHEN** `[extra.sections] banner = false`
+- **THEN** the served homepage contains a `#section-banner` wrapper with `display:none`
+- **AND** toggling the banner in the customizer reveals it without a page reload
 
 ### Requirement: Default Enable Behavior
-The system SHALL treat missing or unset toggle flags as `enabled = true` (opt-out pattern).
+The system SHALL treat a missing or unset toggle flag as enabled (opt-out pattern), so existing sites render all supported sections without any `[extra.sections]` configuration.
 
-**Context**: Existing sites should continue working without modification; sections render by default.
+**Context**: Sites should continue working unchanged; sections render by default.
 
-#### Scenario: Verify sections render by default without toggle flags
-**GIVEN** a site with no `[extra.sections]` configuration in `zola.toml`  
-**WHEN** the site is served via `zola serve`  
-**THEN** all section partials (banner, hero, features, blog, testimonials, cta, footer, navigation) render with enabled behavior  
-**AND** the homepage displays all default sections without requiring explicit toggle configuration
+#### Scenario: Sections render by default without flags
+- **GIVEN** a site with no `[extra.sections]` configuration
+- **WHEN** the site is served
+- **THEN** `banner`, `features`, `testimonials`, and `cta` all render with enabled behavior
 
 ### Requirement: Support Common Sections
-The system SHALL provide toggle support for commonly customized sections: `banner`, `hero`, `features`, `blog`, `testimonials`, `cta`, `footer`, and `navigation`.
+The system SHALL provide toggle support for the sections present on the current homepage: `banner`, `features`, `testimonials`, and `cta`. Additional sections MAY be registered later via the same macro without structural change.
 
-**Context**: These are typical sections in marketing and informational sites.
+**Context**: Scope is limited to sections that actually exist on today's homepage; broader coverage is deferred.
 
-#### Scenario: Toggle multiple sections for minimal landing page
-**GIVEN** a site that should render only hero and CTA sections  
-**WHEN** `zola.toml` contains:  
-```toml
-[extra.sections]
-banner.enabled = false
-features.enabled = false
-blog.enabled = false
-testimonials.enabled = false
-navigation.enabled = false
-```
-**THEN** only hero and CTA sections are rendered on the homepage  
-**AND** the generated HTML is minimal and focused
+#### Scenario: Toggle the supported sections
+- **WHEN** `zola.toml` sets `[extra.sections]` with `features = false` and `testimonials = false`
+- **THEN** the homepage renders `banner` and `cta` but omits `features` and `testimonials` (production) or hides them (dev)
 
-#### Scenario: Enable/disable sections per page via front matter
-**GIVEN** a custom page content file  
-**WHEN** the page front matter includes:  
-```yaml
-+++
-sections = { testimonials.enabled = false }
-+++
-```
-**AND** the template merges page-level and global settings  
-**THEN** the testimonials section is hidden on this page only  
-**AND** other pages retain global configuration
+### Requirement: Single Reusable Section Macro
+The system SHALL render homepage sections through a single reusable Tera `{% macro %}` parameterized by section id, enabled state, and dev flag, replacing per-section copy-pasted conditional blocks. Adding or removing a section's toggle SHALL be a single macro invocation.
+
+#### Scenario: One macro drives all sections
+- **WHEN** the homepage template is inspected
+- **THEN** each toggled section is rendered via a call to the shared section macro
+- **AND** no section repeats the visibility-resolution logic inline
 

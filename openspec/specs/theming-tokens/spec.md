@@ -16,14 +16,20 @@ The system SHALL store all design tokens (colors, typography, spacing) in the `[
 **AND** no CSS recompilation or rebuild is required
 
 ### Requirement: Runtime CSS Variable Injection
-The system SHALL render all configured theme tokens as CSS custom properties on `:root` and `.dark` selectors during site build via the `theme-vars.html` partial.
+The system SHALL render CSS custom properties on `:root` and `.dark` selectors via the `theme-vars.html` partial, emitting an override **only for tokens explicitly set** in `config.extra.theme`. The partial SHALL place its `<style>` block in `<head>` **after** the main stylesheet link so overrides win by cascade order, and SHALL NOT use `!important`.
 
-**Context**: CSS classes that reference `var(--color-primary)` must receive their values from configuration, enabling dynamic swaps without stylesheet compilation.
+**Context**: Tailwind `@theme` in the committed `generated.css` already declares every token's default on `:root`. The partial only needs to override the subset the operator configured; equal specificity plus later source position makes the override win without `!important`.
 
-#### Scenario: Verify CSS custom properties are rendered with configured values
-**WHEN** a site is served via `zola serve`  
-**THEN** inspecting the page source `<head>` shows a `<style>` block with `:root` containing all configured theme tokens (e.g., `--color-primary: #FF5733; --color-body: #ffffff;`)  
-**AND** the CSS custom properties match the values set in `[extra.theme]` from `zola.toml`
+#### Scenario: Only configured tokens are overridden
+- **WHEN** `zola.toml` sets `primary = "#FF5733"` and leaves `body` unset
+- **THEN** the head `<style>` block contains `--color-primary: #FF5733` (no `!important`)
+- **AND** it contains no `--color-body` line, so `body` falls back to the Tailwind `@theme` default
+
+#### Scenario: Override wins by cascade order, not !important
+- **WHEN** a site is served and the page source `<head>` is inspected
+- **THEN** the `theme-vars.html` `<style>` block appears after the `generated.css` `<link>`
+- **AND** no CSS custom property in that block uses `!important`
+- **AND** elements using `bg-primary` render with the configured value
 
 ### Requirement: Color Palette Support
 The system SHALL support distinct light-mode and dark-mode color palettes within `[extra.theme]` using `primary`, `body`, `border`, `light`, `dark`, `text`, `text_dark`, `text_light` and their `darkmode_*` equivalents.
@@ -48,14 +54,15 @@ The system SHALL support font family and font URL configuration for primary and 
 **THEN** the theme-vars partial renders `<link>` tags for the specified fonts in the page head  
 **AND** the `--font-primary` CSS custom property references the font name from `font_primary` config
 
-### Requirement: Fallback Defaults
-The system SHALL provide sensible fallback values for all theme tokens when not explicitly configured.
+### Requirement: Token Registry Source of Truth
+The system SHALL define the set of theme tokens in a single data file `data/tokens.toml`, loaded via Zola `load_data`, where each token declares its config `key`, CSS custom property `css_var`, and `group` (`light`, `dark`, or `font`). All token consumers (override emission, customizer inputs, configuration export) SHALL iterate this registry rather than hardcoding the token list.
 
-**Context**: New sites should render correctly even if `[extra.theme]` is minimal or missing, using safe defaults.
+#### Scenario: Add a new token in one place
+- **WHEN** an engineer adds a single row to `data/tokens.toml` for a new token
+- **THEN** the override partial, the customizer UI, and the TOML export all include that token without further edits to any template or script
 
-#### Scenario: Override defaults with custom palette
-**GIVEN** a site with default theme tokens  
-**WHEN** an engineer provides a complete custom `[extra.theme]` block in `zola.toml`  
-**THEN** all rendered CSS variables use custom values instead of fallbacks  
-**AND** no theme defaults from the partial are used
+#### Scenario: Registry is the only token list
+- **WHEN** the codebase is inspected for the token list
+- **THEN** the token keys appear only in `data/tokens.toml` and are consumed via loops
+- **AND** no template or script contains a separately hand-maintained copy of the token list
 

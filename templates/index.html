@@ -1,52 +1,10 @@
 {% extends "base.html" %}
+{% import "macros/sections.html" as section_macros %}
 
 {% block content %}
-  {% set show_banner = true %}
-  {% if config.extra.sections and config.extra.sections.banner is defined %}
-    {% set show_banner = config.extra.sections.banner %}
-  {% endif %}
-  {% if section.extra.banner and section.extra.banner.enable is defined %}
-    {% set show_banner = section.extra.banner.enable %}
-  {% endif %}
-  <div id="section-banner" style="{% if not show_banner %}display: none;{% endif %}">
-    {% if section.extra.banner %}
-      {% include "partials/banner.html" %}
-    {% endif %}
-  </div>
-
-  {% set show_features = true %}
-  {% if config.extra.sections and config.extra.sections.features is defined %}
-    {% set show_features = config.extra.sections.features %}
-  {% endif %}
-  <div id="section-features" style="{% if not show_features %}display: none;{% endif %}">
-    {% if section.extra.features %}
-      {% include "partials/features.html" %}
-    {% endif %}
-  </div>
-
-  {% set show_testimonials = true %}
-  {% if config.extra.sections and config.extra.sections.testimonials is defined %}
-    {% set show_testimonials = config.extra.sections.testimonials %}
-  {% endif %}
-  {% if section.extra.testimonials and section.extra.testimonials.enable is defined %}
-    {% set show_testimonials = section.extra.testimonials.enable %}
-  {% endif %}
-  <div id="section-testimonials" style="{% if not show_testimonials %}display: none;{% endif %}">
-    {% if section.extra.testimonials %}
-      {% include "partials/testimonials.html" %}
-    {% endif %}
-  </div>
-
-  {% set show_cta = true %}
-  {% if config.extra.sections and config.extra.sections.cta is defined %}
-    {% set show_cta = config.extra.sections.cta %}
-  {% endif %}
-  {% if section.extra.cta and section.extra.cta.enable is defined %}
-    {% set show_cta = section.extra.cta.enable %}
-  {% endif %}
-  <div id="section-cta" style="{% if not show_cta %}display: none;{% endif %}">
-    {% if section.extra.cta %}
-      {% include "partials/cta.html" %}
-    {% endif %}
-  </div>
+  {% set is_dev = get_env(name="ZOLA_ENV", default="") == "dev" %}
+  {{ section_macros::render(id="banner", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
+  {{ section_macros::render(id="features", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
+  {{ section_macros::render(id="testimonials", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
+  {{ section_macros::render(id="cta", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
 {% endblock content %}

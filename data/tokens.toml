@@ -1,0 +1,89 @@
+[[tokens]]
+key = "primary"
+css_var = "--color-primary"
+group = "light"
+
+[[tokens]]
+key = "body"
+css_var = "--color-body"
+group = "light"
+
+[[tokens]]
+key = "border"
+css_var = "--color-border"
+group = "light"
+
+[[tokens]]
+key = "light"
+css_var = "--color-light"
+group = "light"
+
+[[tokens]]
+key = "dark"
+css_var = "--color-dark"
+group = "light"
+
+[[tokens]]
+key = "text"
+css_var = "--color-text"
+group = "light"
+
+[[tokens]]
+key = "text_dark"
+css_var = "--color-text-dark"
+group = "light"
+
+[[tokens]]
+key = "text_light"
+css_var = "--color-text-light"
+group = "light"
+
+[[tokens]]
+key = "darkmode_primary"
+css_var = "--color-darkmode-primary"
+group = "dark"
+
+[[tokens]]
+key = "darkmode_body"
+css_var = "--color-darkmode-body"
+group = "dark"
+
+[[tokens]]
+key = "darkmode_border"
+css_var = "--color-darkmode-border"
+group = "dark"
+
+[[tokens]]
+key = "darkmode_light"
+css_var = "--color-darkmode-light"
+group = "dark"
+
+[[tokens]]
+key = "darkmode_dark"
+css_var = "--color-darkmode-dark"
+group = "dark"
+
+[[tokens]]
+key = "darkmode_text"
+css_var = "--color-darkmode-text"
+group = "dark"
+
+[[tokens]]
+key = "darkmode_text_dark"
+css_var = "--color-darkmode-text-dark"
+group = "dark"
+
+[[tokens]]
+key = "darkmode_text_light"
+css_var = "--color-darkmode-text-light"
+group = "dark"
+
+[[tokens]]
+key = "font_primary"
+css_var = "--font-primary"
+group = "font"
+
+[[tokens]]
+key = "font_secondary"
+css_var = "--font-secondary"
+group = "font"

@@ -17,10 +17,9 @@
 
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ config.extra.title }}</title>
 
-  {# Configuration-driven Fonts and Styles #}
-  {% include "partials/theme-vars.html" %}
-
   <link rel="stylesheet" href="{{ get_url(path='/css/generated.css') }}">
+  {# Theme token overrides — placed after the stylesheet so the cascade wins without !important #}
+  {% include "partials/theme-vars.html" %}
   <link rel="stylesheet" id="code-highlighting-light" href="{{ get_url(path='/giallo-light.css') }}">
   <link rel="stylesheet" id="code-highlighting-dark" href="{{ get_url(path='/giallo-dark.css') }}" disabled>
   
@@ -55,6 +54,8 @@
     {% block content %}{% endblock content %}
   </main>
   {% include "partials/footer.html" %}
-  {% include "partials/customizer.html" %}
+  {% if get_env(name="ZOLA_ENV", default="") == "dev" %}
+    {% include "partials/customizer.html" %}
+  {% endif %}
 </body>
 </html>
