@@ -21,6 +21,7 @@
   open: false,
   activeTab: 'light',
   copied: false,
+  importMsg: '',
   STORAGE_KEY: 'zola-theme-customizer-draft',
 
   registry: [{% for token in tokens.tokens %}
@@ -135,6 +136,60 @@
       this.copied = true;
       setTimeout(() => this.copied = false, 2000);
     });
+  },
+
+  // colorwind.dev theme.json → Astroplate token mapping (lossy by design; card overrides backgroundSecondary)
+  COLORWIND_MAP: {
+    background:          { light: 'body',       dark: 'darkmode_body' },
+    backgroundSecondary: { light: 'light',      dark: 'darkmode_light' },
+    foreground:          { light: 'text',        dark: 'darkmode_text' },
+    foregroundMuted:     { light: 'text_light',  dark: 'darkmode_text_light' },
+    primary:             { light: 'primary',     dark: 'darkmode_primary' },
+    border:              { light: 'border',      dark: 'darkmode_border' },
+    card:                { light: 'light',       dark: 'darkmode_light' }
+  },
+
+  parseColorwind(jsonText) {
+    const parsed = JSON.parse(jsonText);
+    if (!parsed.light && !parsed.dark) throw new Error('No light or dark palette found');
+    return parsed;
+  },
+
+  applyColorwind(theme) {
+    // card comes last so it takes precedence over backgroundSecondary for the same slot
+    const order = ['background', 'backgroundSecondary', 'foreground', 'foregroundMuted', 'primary', 'border', 'card'];
+    const applied = new Set();
+    const ignored = new Set();
+    [['light', 'light'], ['dark', 'dark']].forEach(([themeKey, mode]) => {
+      const obj = theme[themeKey];
+      if (!obj) return;
+      Object.keys(obj).forEach(cwKey => { if (!this.COLORWIND_MAP[cwKey]) ignored.add(cwKey); });
+      order.forEach(cwKey => {
+        if (!(cwKey in obj)) return;
+        const regKey = this.COLORWIND_MAP[cwKey][mode];
+        const token = this.registry.find(t => t.key === regKey);
+        if (!token) return;
+        this.values[token.cssVar] = obj[cwKey];
+        this.onValueChange(token.cssVar);
+        applied.add(token.cssVar);
+      });
+    });
+    return { applied: applied.size, ignored: ignored.size };
+  },
+
+  importFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    file.text().then(text => {
+      try {
+        const theme = this.parseColorwind(text);
+        const { applied, ignored } = this.applyColorwind(theme);
+        this.importMsg = 'Applied ' + applied + ' colors, ignored ' + ignored + ' unsupported';
+      } catch (e) {
+        this.importMsg = 'Error: ' + (e.message || 'Invalid file');
+      }
+      event.target.value = '';
+    });
   }
 }" class="fixed bottom-6 right-6 z-[9999] flex flex-col items-end font-primary">
 
@@ -232,18 +287,28 @@
       </template>
     </div>
 
-    <!-- Footer: Reset + Export -->
-    <div class="mt-5 border-t border-border pt-4 dark:border-darkmode-border flex gap-2">
-      <button
-        @click="reset()"
-        class="flex flex-1 items-center justify-center rounded border border-border py-2 text-sm font-semibold text-text-dark shadow-sm transition hover:bg-light dark:border-darkmode-border dark:text-darkmode-text dark:hover:bg-darkmode-light"
-      >Reset</button>
-      <button
-        @click="copyToml()"
-        class="flex flex-1 items-center justify-center rounded bg-primary py-2 text-sm font-semibold text-white shadow transition hover:opacity-90 dark:bg-white dark:text-dark"
-      >
-        <span x-text="copied ? 'Copied!' : 'Export TOML'"></span>
-      </button>
+    <!-- Footer: Reset + Import + Export -->
+    <div class="mt-5 border-t border-border pt-4 dark:border-darkmode-border">
+      <div class="flex gap-2">
+        <button
+          @click="reset()"
+          class="flex flex-1 items-center justify-center rounded border border-border py-2 text-sm font-semibold text-text-dark shadow-sm transition hover:bg-light dark:border-darkmode-border dark:text-darkmode-text dark:hover:bg-darkmode-light"
+        >Reset</button>
+        <label
+          class="flex flex-1 cursor-pointer items-center justify-center rounded border border-border py-2 text-sm font-semibold text-text-dark shadow-sm transition hover:bg-light dark:border-darkmode-border dark:text-darkmode-text dark:hover:bg-darkmode-light"
+          title="Import a colorwind.dev theme.json palette"
+        >
+          Import
+          <input type="file" accept="application/json" class="sr-only" @change="importFile($event); importMsg = ''">
+        </label>
+        <button
+          @click="copyToml()"
+          class="flex flex-1 items-center justify-center rounded bg-primary py-2 text-sm font-semibold text-white shadow transition hover:opacity-90 dark:bg-white dark:text-dark"
+        >
+          <span x-text="copied ? 'Copied!' : 'Export TOML'"></span>
+        </button>
+      </div>
+      <p x-show="importMsg" x-text="importMsg" class="mt-2 text-center text-xs text-text-light dark:text-darkmode-text-light"></p>
     </div>
   </div>
 </div>
