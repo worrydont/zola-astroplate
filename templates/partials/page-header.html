@@ -1,0 +1,19 @@
+{% set header_title = "" %}
+{% if title %}
+  {% set header_title = title %}
+{% elif page.title %}
+  {% set header_title = page.title %}
+{% elif section.title %}
+  {% set header_title = section.title %}
+{% else %}
+  {% set header_title = "Untitled" %}
+{% endif %}
+
+<section>
+  <div class="container text-center">
+    <div class="rounded-2xl bg-gradient-to-b from-body to-light px-8 py-14 dark:from-darkmode-body dark:to-darkmode-light">
+      <h1>{{ header_title }}</h1>
+      {% include "partials/breadcrumbs.html" %}
+    </div>
+  </div>
+</section>

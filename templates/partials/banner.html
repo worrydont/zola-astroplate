@@ -1,0 +1,37 @@
+<section class="section pt-14">
+  <div class="container">
+    <div class="row justify-center">
+      <div class="lg:col-7 md:col-9 mb-8 text-center">
+        <h1 class="mb-4 text-h3 lg:text-h1">
+          {{ section.extra.banner.title | markdown(inline=true) | safe }}
+        </h1>
+        <div class="mb-8">
+          {{ section.extra.banner.content | markdown(inline=true) | safe }}
+        </div>
+        {% if section.extra.banner.button.enable %}
+          <a
+            class="btn btn-primary"
+            href="{{ section.extra.banner.button.link }}"
+            {% if section.extra.banner.button.link is starting_with("http") %}
+              target="_blank"
+              rel="noopener"
+            {% endif %}
+          >
+            {{ section.extra.banner.button.label }}
+          </a>
+        {% endif %}
+      </div>
+      {% if section.extra.banner.image %}
+        <div class="col-12">
+          <img
+            src="{{ get_url(path=section.extra.banner.image) }}"
+            height="380"
+            width="1200"
+            alt="banner"
+            class="mx-auto"
+          />
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

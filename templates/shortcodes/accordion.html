@@ -1,0 +1,13 @@
+<div class="accordion mb-6" x-data="{ open: false }" :class="{ 'active': open }">
+  <button type="button" class="accordion-header" @click="open = !open">
+    {{ title }}
+    <svg class="accordion-icon" :class="{ 'rotate-0': open, '-rotate-90': !open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </button>
+  <div class="accordion-content" x-show="open" x-collapse>
+    <div class="py-4">
+      {{ body | safe }}
+    </div>
+  </div>
+</div>

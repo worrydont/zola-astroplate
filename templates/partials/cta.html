@@ -1,0 +1,35 @@
+{% if section.extra.cta.enable %}
+<section class="mb-28">
+  <div class="container">
+    <div class="rounded-xl bg-light px-4 py-16 dark:bg-darkmode-light xl:p-20">
+      <div class="row items-center justify-between">
+        <div class="mb-10 md:col-5 lg:col-4 md:order-2 md:mb-0">
+          <img
+            class="w-full mx-auto"
+            src="{{ get_url(path=section.extra.cta.image) }}"
+            width="392"
+            height="390"
+            alt="cta-image"
+          />
+        </div>
+        <div class="md:col-7 md:order-1">
+          <h2 class="mb-2">
+            {{ section.extra.cta.title | markdown(inline=true) | safe }}
+          </h2>
+          <p class="mb-6">
+            {{ section.extra.cta.description | markdown(inline=true) | safe }}
+          </p>
+          {% if section.extra.cta.button.enable %}
+            <a
+              class="btn btn-primary"
+              href="{{ section.extra.cta.button.link }}"
+            >
+              {{ section.extra.cta.button.label }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}

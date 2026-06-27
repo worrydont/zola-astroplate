@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% set title = "Categories" %}
+  {% include "partials/page-header.html" %}
+
+  <section class="section-sm">
+    <div class="container">
+      <div class="row justify-center">
+        <div class="lg:col-10">
+          <div class="flex flex-wrap gap-4 justify-center">
+            {% for term in terms %}
+              <a href="{{ term.permalink }}" class="rounded bg-primary px-6 py-3 text-lg font-semibold text-white hover:bg-opacity-90 transition-colors">
+                {{ term.name }} <span class="ml-2 text-sm opacity-60">({{ term.pages | length }})</span>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

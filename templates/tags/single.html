@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% set title = "#" ~ term.name %}
+  {% include "partials/page-header.html" %}
+
+  <section class="section">
+    <div class="container">
+      <div class="row g-4">
+        {% for page in term.pages %}
+          <div class="col-12 md:col-6 lg:col-4">
+            {% include "partials/blog-card.html" %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock content %}

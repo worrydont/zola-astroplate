@@ -1,0 +1,319 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin 'tailwind-bootstrap-grid';
+
+/* Astroplate's exact dark mode custom variant */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* === Colors === */
+  --color-primary: #121212;
+  --color-body: #fff;
+  --color-border: #eaeaea;
+  --color-light: #f6f6f6;
+  --color-dark: #040404;
+  --color-text: #444444;
+  --color-text-dark: #040404;
+  --color-text-light: #717171;
+
+  /* === Darkmode Colors === */
+  --color-darkmode-primary: #fff;
+  --color-darkmode-body: #1c1c1c;
+  --color-darkmode-border: #3E3E3E;
+  --color-darkmode-light: #222222;
+  --color-darkmode-dark: #fff;
+  --color-darkmode-text: #B4AFB6;
+  --color-darkmode-text-dark: #fff;
+  --color-darkmode-text-light: #B4AFB6;
+
+  /* === Font Families === */
+  --font-primary: Heebo, sans-serif;
+  --font-secondary: Signika, sans-serif;
+
+  /* === Font Sizes === */
+  --text-base: 16px;
+  --text-base-sm: 12.8px;
+  --text-h6: 1.2rem;
+  --text-h6-sm: 1.08rem;
+  --text-h5: 1.44rem;
+  --text-h5-sm: 1.296rem;
+  --text-h4: 1.728rem;
+  --text-h4-sm: 1.5552rem;
+  --text-h3: 2.0736rem;
+  --text-h3-sm: 1.86624rem;
+  --text-h2: 2.48832rem;
+  --text-h2-sm: 2.239488rem;
+  --text-h1: 2.9859839999999997rem;
+  --text-h1-sm: 2.6873856rem;
+}
+
+@layer base {
+  html {
+    @apply text-base-sm md:text-base;
+  }
+
+  body {
+    @apply bg-body text-base font-primary font-normal leading-relaxed text-text;
+  }
+  .dark body {
+    @apply bg-darkmode-body text-darkmode-text;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-secondary font-bold leading-tight text-text-dark;
+  }
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-darkmode-text-dark;
+  }
+
+  h1, .h1 { @apply text-h1-sm md:text-h1; }
+  h2, .h2 { @apply text-h2-sm md:text-h2; }
+  h3, .h3 { @apply text-h3-sm md:text-h3; }
+  h4, .h4 { @apply text-h4; }
+  h5, .h5 { @apply text-h5; }
+  h6, .h6 { @apply text-h6; }
+
+  b, strong { @apply font-semibold; }
+
+  a {
+    @apply no-underline;
+  }
+
+  code {
+    @apply after:border-none;
+  }
+
+  blockquote > p {
+    @apply my-0!;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .section { @apply py-24 xl:py-28; }
+  .section-sm { @apply py-16 xl:py-20; }
+
+  .container {
+    @apply mx-auto xl:!max-w-[1320px] px-4;
+  }
+
+  /* Navigation from Astroplate navigation.css */
+  .header {
+    @apply bg-body py-6;
+  }
+  .dark .header {
+    @apply bg-darkmode-body;
+  }
+
+  .navbar {
+    @apply relative flex flex-wrap items-center justify-between;
+  }
+
+  .navbar-brand {
+    @apply text-text-dark text-xl font-semibold;
+  }
+  .dark .navbar-brand {
+    @apply text-darkmode-text-dark;
+  }
+  .navbar-brand image {
+    @apply max-h-full max-w-full;
+  }
+
+  .navbar-nav {
+    @apply text-center lg:text-left;
+  }
+
+  .nav-link {
+    @apply text-text-dark hover:text-primary block p-3 cursor-pointer font-semibold transition lg:px-2 lg:py-3;
+  }
+  .dark .nav-link {
+    @apply text-darkmode-text-dark hover:text-darkmode-primary;
+  }
+
+  .nav-dropdown {
+    @apply mr-0;
+  }
+
+  .nav-dropdown > svg {
+    @apply pointer-events-none;
+  }
+
+  .nav-dropdown-list {
+    @apply bg-body z-10 min-w-[180px] rounded p-4 shadow-sm;
+  }
+  .dark .nav-dropdown-list {
+    @apply bg-darkmode-body;
+  }
+
+  .nav-dropdown-item {
+    @apply [&:not(:last-child)]:mb-2;
+  }
+
+  .nav-dropdown-link {
+    @apply text-text-dark hover:text-primary block py-1 font-semibold transition;
+  }
+  .dark .nav-dropdown-link {
+    @apply text-darkmode-text hover:text-darkmode-primary;
+  }
+
+  /* theme-switcher */
+  .theme-switcher {
+    @apply inline-flex;
+  }
+  .theme-switcher label {
+    @apply bg-border relative inline-block h-4 w-6 cursor-pointer rounded-2xl lg:w-10;
+  }
+  .theme-switcher input {
+    @apply absolute opacity-0;
+  }
+  .theme-switcher span {
+    @apply bg-dark absolute -top-1 left-0 flex h-6 w-6 items-center justify-center rounded-full transition-all duration-300;
+  }
+  .dark .theme-switcher span {
+    @apply bg-white;
+  }
+  .theme-switcher input:checked + label span {
+    @apply lg:left-4;
+  }
+
+  /* Buttons from Astroplate buttons.css */
+  .btn {
+    @apply inline-block rounded border border-transparent px-5 py-2 font-semibold transition;
+  }
+
+  .btn-sm {
+    @apply rounded-sm px-4 py-1.5 text-sm;
+  }
+
+  .btn-primary {
+    @apply border-primary bg-primary text-white;
+  }
+  .dark .btn-primary {
+    @apply border-darkmode-primary bg-darkmode-primary text-dark;
+  }
+
+  .btn-outline-primary {
+    @apply border-dark text-text-dark hover:bg-dark hover:text-white bg-transparent;
+  }
+  .dark .btn-outline-primary {
+    @apply border-darkmode-primary text-white hover:bg-darkmode-primary hover:text-text-dark;
+  }
+
+  .bg-gradient {
+    @apply bg-gradient-to-b from-body to-light;
+  }
+  .dark .bg-gradient {
+    @apply from-darkmode-body to-darkmode-light;
+  }
+
+  .form-input {
+    @apply rounded border border-border bg-light px-4 py-2 focus:border-primary focus:outline-none;
+  }
+  .dark .form-input {
+    @apply border-darkmode-border bg-darkmode-light;
+  }
+
+  .form-label {
+    @apply mb-2 block font-semibold text-text-dark;
+  }
+  .dark .form-label {
+    @apply text-darkmode-text-dark;
+  }
+
+  /* Notice styles */
+  .notice { @apply mb-6 rounded-lg border px-8 py-6 border-current; }
+  .notice.note { @apply text-[#1B83E2]; }
+  .notice.tip { @apply text-[#40D294]; }
+  .notice.info { @apply text-[#E3A72C]; }
+  .notice.warning { @apply text-[#DB2C23]; }
+
+  /* Tab styles */
+  .tab { @apply overflow-hidden rounded-lg border border-border; }
+  .dark .tab { @apply border-darkmode-border; }
+  .tab-nav { @apply flex border-b border-border bg-light !m-0 !list-none; }
+  .dark .tab-nav { @apply border-darkmode-border bg-darkmode-light; }
+  .tab-nav-item { @apply cursor-pointer border-b-[3px] border-border py-2 text-lg text-text-dark opacity-80 !my-0 !px-8; }
+  .dark .tab-nav-item { @apply border-darkmode-border text-darkmode-text-light; }
+  .tab-nav-item.active { @apply border-b-[3px] border-dark opacity-100; }
+  .dark .tab-nav-item.active { @apply border-darkmode-primary; }
+  .tab-content { @apply px-5; }
+  .tab-content-panel { @apply p-8; }
+  .tab-content-panel p { @apply mb-0; }
+
+  /* Accordion styles */
+  .accordion { @apply mb-6 overflow-hidden rounded-lg border border-border bg-light; }
+  .dark .accordion { @apply border-darkmode-border bg-darkmode-light; }
+  .accordion-header { @apply flex w-full cursor-pointer items-center justify-between px-8 py-4 text-lg text-text-dark; }
+  .dark .accordion-header { @apply bg-darkmode-light text-darkmode-text-light; }
+  .accordion-icon { @apply h-[.8em] w-[.8em] rotate-[-90deg] transition-transform duration-200; }
+  .accordion.active .accordion-icon { @apply rotate-0; }
+  .accordion-content { @apply px-8 py-0; }
+
+  /* Social icons */
+  .social-icons {
+    @apply space-x-4;
+  }
+  .social-icons li {
+    @apply inline-block;
+  }
+  .social-icons li a {
+    @apply flex h-9 w-9 items-center justify-center rounded-sm bg-primary text-center leading-9 text-white;
+  }
+  .dark .social-icons li a {
+    @apply bg-darkmode-primary text-darkmode-body;
+  }
+  .social-icons li a svg {
+    @apply h-5 w-5;
+  }
+
+  /* Content/prose styles — matching Astroplate exactly with dark: variants inline */
+  .content {
+    @apply prose max-w-none;
+    @apply prose-headings:mb-[.3em] prose-headings:mt-[.6em] prose-headings:text-text-dark dark:prose-headings:text-darkmode-text-dark;
+    @apply prose-h1:text-h1-sm md:prose-h1:text-h1;
+    @apply prose-h2:text-h2-sm md:prose-h2:text-h2;
+    @apply prose-h3:text-h3-sm md:prose-h3:text-h3;
+    @apply prose-p:text-base prose-p:text-text dark:prose-p:text-darkmode-text;
+    @apply prose-a:text-text prose-a:[&.btn]:no-underline dark:prose-a:text-darkmode-text;
+    @apply prose-img:max-w-full prose-img:rounded;
+    @apply prose-strong:text-text-dark dark:prose-strong:text-darkmode-text;
+    @apply prose-hr:border-border dark:prose-hr:border-darkmode-border;
+    @apply prose-pre:rounded-lg prose-pre:bg-light dark:prose-pre:bg-darkmode-light;
+    @apply prose-code:text-darkmode-text-dark;
+    @apply prose-li:text-text dark:prose-li:text-darkmode-text;
+    @apply prose-blockquote:rounded-lg prose-blockquote:border prose-blockquote:border-l-[10px] prose-blockquote:border-primary prose-blockquote:bg-light prose-blockquote:px-8 prose-blockquote:py-10 prose-blockquote:font-secondary prose-blockquote:text-2xl prose-blockquote:not-italic prose-blockquote:text-text-dark dark:prose-blockquote:border-darkmode-primary dark:prose-blockquote:bg-darkmode-light dark:prose-blockquote:text-darkmode-text-light;
+    @apply prose-table:relative prose-table:overflow-hidden prose-table:rounded-lg prose-table:before:absolute prose-table:before:left-0 prose-table:before:top-0 prose-table:before:h-full prose-table:before:w-full prose-table:before:rounded-[inherit] prose-table:before:border prose-table:before:border-border prose-table:before:content-[""] dark:prose-table:before:border-darkmode-border;
+    @apply prose-thead:border-border prose-thead:bg-light dark:prose-thead:border-darkmode-border dark:prose-thead:bg-darkmode-light;
+    @apply prose-th:relative prose-th:z-10 prose-th:px-4 prose-th:py-[18px] prose-th:text-text-dark dark:prose-th:text-darkmode-text;
+    @apply prose-tr:border-border dark:prose-tr:border-darkmode-border;
+    @apply prose-td:relative prose-td:z-10 prose-td:px-3 prose-td:py-[18px] dark:prose-td:text-darkmode-text;
+  }
+
+  /* Override prose styles for buttons */
+  .content .btn {
+    @apply no-underline;
+  }
+
+  /* Notice detail styles */
+  .notice-head {
+    @apply flex items-center;
+  }
+  .notice-head svg {
+    @apply mr-3;
+  }
+  .notice-head p {
+    @apply font-secondary text-xl font-semibold text-text-dark;
+  }
+  .dark .notice-head p {
+    @apply text-darkmode-text-light;
+  }
+  .notice-body {
+    @apply mt-3;
+  }
+  .notice-body p {
+    @apply my-0;
+  }
+}

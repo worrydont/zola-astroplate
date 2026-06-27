@@ -1,0 +1,12 @@
+<section class="section">
+  <div class="container text-center">
+    <div class="row justify-center">
+      <div class="sm:col-10 md:col-8 lg:col-6">
+        <span class="text-[8rem] block font-bold text-dark dark:text-darkmode-dark opacity-10">404</span>
+        <h1 class="h2 mb-4">{{ res.not_found_title | default(value="Page Not Found") }}</h1>
+        <p class="mb-8">{{ res.not_found_description | default(value="The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.") }}</p>
+        <a href="{{ config.base_url }}" class="btn btn-primary">{{ res.back_to_home | default(value="Back to Home") }}</a>
+      </div>
+    </div>
+  </div>
+</section>

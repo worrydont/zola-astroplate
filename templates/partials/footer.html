@@ -1,0 +1,67 @@
+<footer class="bg-light dark:bg-darkmode-light">
+  <div class="container">
+    <div class="row items-center py-10">
+      <div class="mb-8 text-center lg:col-3 lg:mb-0 lg:text-left">
+        <!-- Logo -->
+        <a href="{{ get_url(path='/') }}" class="inline-block">
+          {% if config.extra.logo %}
+            <img
+              src="{{ get_url(path=config.extra.logo) }}"
+              alt="{{ config.extra.title }}"
+              height="40"
+              class="dark:hidden"
+            />
+            <img
+              src="{{ get_url(path=config.extra.logo_darkmode | default(value=config.extra.logo)) }}"
+              alt="{{ config.extra.title }}"
+              height="40"
+              class="hidden dark:block"
+            />
+          {% else %}
+            <span class="text-xl font-semibold text-text-dark dark:text-darkmode-text-dark">{{ config.extra.title }}</span>
+          {% endif %}
+        </a>
+      </div>
+      <div class="mb-8 text-center lg:col-6 lg:mb-0">
+        <!-- Footer Menu -->
+        <ul>
+          {% if config.extra.footer_pages %}
+            {% for page in config.extra.footer_pages %}
+              <li class="m-3 inline-block">
+                <a href="{{ get_url(path=page.url) }}" class="text-text-dark hover:text-primary dark:text-darkmode-text-dark dark:hover:text-darkmode-primary">
+                  {{ page.title }}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+      <div class="mb-8 text-center lg:col-3 lg:mb-0 lg:mt-0 lg:text-right">
+        <!-- Social Icons -->
+        {% if config.extra.social_links %}
+          <ul class="social-icons">
+            {% for social in config.extra.social_links %}
+              {% if social.enabled %}
+                <li>
+                  <a
+                    href="{{ social.link }}"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="{{ social.name }}"
+                  >
+                    {{ social.svg | safe }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-border py-7 dark:border-darkmode-border">
+    <div class="container text-center text-text-light dark:text-darkmode-text-light">
+      <p>{{ config.extra.copyright | replace(from="{year}", to=now() | date(format="%Y")) | safe }}</p>
+    </div>
+  </div>
+</footer>

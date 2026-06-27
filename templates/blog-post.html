@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="section-sm">
+    <div class="container">
+      <div class="row justify-center">
+        <div class="lg:col-10">
+          <article class="content"
+            data-clipboard-copy="{{ res.clipboard_copy }}"
+            data-clipboard-copied="{{ res.clipboard_copied }}"
+            data-clipboard-error="{{ res.clipboard_error }}"
+          >
+            {% if page.extra.image %}
+              <div class="mb-10 overflow-hidden rounded-2xl">
+                <img
+                  src="{{ get_url(path=page.path ~ page.extra.image) }}"
+                  alt="{{ page.title }}"
+                  class="w-full object-cover"
+                />
+              </div>
+            {% endif %}
+
+            <h1 class="mb-4">{{ page.title }}</h1>
+            
+            <div class="mb-10 flex flex-wrap items-center space-x-4 text-sm text-text-light">
+              <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">
+                {{ page.date | date(locale=date_locale, format=date_format) }}
+              </time>
+              <span>&middot;</span>
+              <span>{{ page.reading_time }} {{ res.minutes_read | default(value="min read") }}</span>
+              {% if page.taxonomies.categories %}
+                <span>&middot;</span>
+                <div class="flex items-center space-x-2">
+                  {% for cat in page.taxonomies.categories %}
+                    <a href="{{ get_taxonomy_url(kind="categories", name=cat) }}" class="hover:text-primary transition-colors">
+                      {{ cat }}
+                    </a>
+                    {% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="content">
+              {{ page.content | safe }}
+            </div>
+
+            <div class="mt-12 flex flex-wrap items-center justify-between border-t border-border pt-8">
+              <div class="mb-4 md:mb-0">
+                {% include "partials/tags.html" %}
+              </div>
+              <div class="flex items-center">
+                <span class="mr-4 text-sm font-semibold">{{ res.share_this | default(value="Share this:") }}</span>
+                {% include "partials/share.html" %}
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include "partials/ld-blog-posting.html" %}
+{% endblock content %}

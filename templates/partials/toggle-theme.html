@@ -1,0 +1,10 @@
+{% if config.extra.displaymode.sun and config.extra.displaymode.moon %}
+  <button id="theme-toggle" aria-label="{{ res.aria_toggle_theme | default(value='Toggle Theme') }}" class="flex items-center justify-center cursor-pointer p-2 rounded-full text-text hover:text-primary transition-colors focus:outline-none">
+    <span class="hidden theme-icon-sun w-6 h-6" title="{{ res.switch_light | default(value='Switch to light mode') }}">
+      {{ config.extra.displaymode.sun.svg | safe }}
+    </span>
+    <span class="theme-icon-moon w-6 h-6" title="{{ res.switch_dark | default(value='Switch to dark mode') }}">
+      {{ config.extra.displaymode.moon.svg | safe }}
+    </span>
+  </button>
+{% endif %}

@@ -1,0 +1,8 @@
+<span class="inline-block align-middle">
+  {# Simple placeholder for icon lookup - in a real theme this would be a larger library or use a partial #}
+  {% if name == "check" %}
+    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+  {% elif name == "info" %}
+    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0 1 18 0z"/></svg>
+  {% endif %}
+</span>

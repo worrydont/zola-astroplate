@@ -1,0 +1,9 @@
+{% if page.taxonomies.tags %}
+  <div class="flex flex-wrap gap-2">
+    {% for tag in page.taxonomies.tags %}
+      <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}" class="rounded bg-light dark:bg-darkmode-light px-3 py-1 text-xs font-semibold hover:bg-primary hover:text-white transition-colors">
+        #{{ tag }}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}

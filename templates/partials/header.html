@@ -1,0 +1,116 @@
+{% set current_path = "" %}
+{% if page is defined %}
+  {% set current_path = page.path %}
+{% elif section is defined %}
+  {% set current_path = section.path %}
+{% endif %}
+
+<header class="header z-30 sticky top-0 bg-body dark:bg-darkmode-body" x-data="{ mobileMenuOpen: false }">
+  <nav class="navbar container">
+    <!-- Logo -->
+    <div class="order-0">
+      <a href="{{ get_url(path='/') }}" class="navbar-brand block">
+        {% if config.extra.logo %}
+          <img
+            src="{{ get_url(path=config.extra.logo) }}"
+            alt="{{ config.extra.title }}"
+            width="200"
+            height="40"
+            class="dark:hidden"
+          />
+          <img
+            src="{{ get_url(path=config.extra.logo_darkmode | default(value=config.extra.logo)) }}"
+            alt="{{ config.extra.title }}"
+            width="200"
+            height="40"
+            class="hidden dark:block"
+          />
+        {% else %}
+          <span class="text-xl font-semibold text-text-dark dark:text-darkmode-text-dark">{{ config.extra.title }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <ul id="nav-menu" class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8">
+      {% if config.extra.menu_pages %}
+        {% for menu in config.extra.menu_pages %}
+          <li class="nav-item">
+            <a
+              href="{{ get_url(path=menu.url) }}"
+              class="nav-link block {% if menu.url == current_path %}active{% endif %}"
+            >
+              {{ menu.title }}
+            </a>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+
+    <!-- Actions -->
+    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+      {% if config.build_search_index %}
+        <a
+          href="{{ get_url(path='/pages/search/') }}"
+          class="border-border text-text-dark hover:text-primary dark:border-darkmode-border mr-5 inline-block border-r pr-5 text-xl dark:text-white dark:hover:text-darkmode-primary"
+          aria-label="search"
+        >
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% include "partials/toggle-theme.html" %}
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        class="order-3 cursor-pointer flex items-center lg:hidden text-text-dark dark:text-white lg:order-1 ml-5"
+        @click="mobileMenuOpen = !mobileMenuOpen"
+        aria-label="Toggle Menu"
+      >
+        <svg x-show="!mobileMenuOpen" class="h-6 w-6 fill-current block" viewBox="0 0 20 20">
+          <title>Menu Open</title>
+          <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
+        </svg>
+        <svg x-show="mobileMenuOpen" class="h-6 w-6 fill-current hidden" viewBox="0 0 20 20" style="display: none;">
+          <title>Menu Close</title>
+          <polygon
+            points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
+            transform="rotate(45 10 10)"></polygon>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+      class="fixed inset-0 top-20 z-40 bg-body dark:bg-darkmode-body lg:hidden overflow-y-auto"
+      x-show="mobileMenuOpen"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 translate-y-[-10px]"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 translate-y-[-10px]"
+      style="display: none;"
+    >
+      <div class="container py-8">
+        <ul class="space-y-4">
+          {% if config.extra.menu_pages %}
+            {% for menu in config.extra.menu_pages %}
+              <li>
+                <a
+                  href="{{ get_url(path=menu.url) }}"
+                  class="nav-link block text-xl font-semibold {% if menu.url == current_path %}active text-primary{% else %}text-text-dark dark:text-darkmode-text-dark{% endif %}"
+                  @click="mobileMenuOpen = false"
+                >
+                  {{ menu.title }}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

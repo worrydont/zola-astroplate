@@ -1,0 +1,26 @@
+{% set breadcrumb_title = "" %}
+{% if title %}
+  {% set breadcrumb_title = title %}
+{% elif page.title %}
+  {% set breadcrumb_title = page.title %}
+{% elif section.title %}
+  {% set breadcrumb_title = section.title %}
+{% else %}
+  {% set breadcrumb_title = "Untitled" %}
+{% endif %}
+
+<nav class="mt-6 flex justify-center space-x-2 text-sm" aria-label="Breadcrumb">
+  <ol class="flex items-center space-x-2">
+    <li>
+      <a href="{{ get_url(path='/') }}" class="text-text hover:text-primary transition-colors">
+        {{ res.breadcrumb_home | default(value="Home") }}
+      </a>
+    </li>
+    <li class="flex items-center space-x-2">
+      <span class="text-text-light">/</span>
+      <span class="text-text-light" aria-current="page">
+        {{ breadcrumb_title }}
+      </span>
+    </li>
+  </ol>
+</nav>

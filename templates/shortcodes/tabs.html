@@ -1,0 +1,29 @@
+{% set tab_contents = body | split(pat="<!-- tab -->") %}
+{# Filter out empty elements if any #}
+{% set_global final_contents = [] %}
+{% for c in tab_contents %}
+  {% if c | trim | length > 0 %}
+    {% set_global final_contents = final_contents | concat(with=c) %}
+  {% endif %}
+{% endfor %}
+
+<div class="tab mb-6" x-data="{ activeTab: 0 }">
+  <ul class="tab-nav">
+    {% for name in names %}
+      <li 
+        class="tab-nav-item" 
+        :class="{ 'active': activeTab === {{ loop.index0 }} }"
+        @click="activeTab = {{ loop.index0 }}"
+      >
+        {{ name }}
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="tab-content">
+    {% for content in final_contents %}
+      <div class="tab-content-panel" x-show="activeTab === {{ loop.index0 }}" style="display: none;" :style="{ display: activeTab === {{ loop.index0 }} ? 'block' : 'none' }">
+        {{ content | safe }}
+      </div>
+    {% endfor %}
+  </div>
+</div>

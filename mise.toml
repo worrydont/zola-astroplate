@@ -1,0 +1,27 @@
+[tools]
+zola = "0.22.1"
+node = "lts"
+
+[tasks.setup]
+description = "Install the Tailwind v4 build dependencies"
+run = "npm install"
+
+[tasks."css:build"]
+description = "Build the minified Tailwind CSS into static/css/generated.css"
+run = "npm run css:build"
+
+[tasks."css:watch"]
+description = "Rebuild the Tailwind CSS on every change"
+run = "npm run css:watch"
+
+[tasks.dev]
+description = "Run the Tailwind CSS watcher in the background via pitchfork"
+run = "pitchfork start css"
+
+[tasks.stop]
+description = "Stop the background Tailwind CSS watcher"
+run = "pitchfork stop css"
+
+[tasks.logs]
+description = "Tail the background Tailwind CSS watcher logs"
+run = "pitchfork logs css --tail"

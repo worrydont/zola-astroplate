@@ -1,0 +1,37 @@
+<div class="bg-body dark:bg-darkmode-body">
+  {% if page.extra.image %}
+    <img
+      src="{{ get_url(path=page.path ~ page.extra.image) }}"
+      alt="{{ page.title }}"
+      class="mb-6 w-full rounded"
+      width="445"
+      height="230"
+    />
+  {% endif %}
+  <h4 class="mb-3">
+    <a href="{{ page.permalink }}" class="hover:text-primary dark:hover:text-darkmode-primary">
+      {{ page.title }}
+    </a>
+  </h4>
+  <ul class="mb-4">
+    {% if page.taxonomies.categories %}
+      <li class="mr-4 inline-block">
+        <svg class="mr-2 -mt-1 inline-block h-[1em] w-[1em]" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3 7V5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2zm0 8v-2c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2zm0 6v-2c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2z"/>
+        </svg>
+        {% for category in page.taxonomies.categories %}
+          <a href="{{ get_taxonomy_url(kind='categories', name=category) }}" class="hover:text-primary dark:hover:text-darkmode-primary">
+            {{ category }}{% if not loop.last %},{% endif %}
+          </a>
+        {% endfor %}
+      </li>
+    {% endif %}
+    {% if page.date %}
+      <li class="inline-block">{{ page.date | date(format="%B %d, %Y") }}</li>
+    {% endif %}
+  </ul>
+  <p class="mb-6">{{ page.description | default(value=page.summary) | striptags | truncate(length=150) }}</p>
+  <a class="btn btn-outline-primary btn-sm" href="{{ page.permalink }}">
+    read more
+  </a>
+</div>

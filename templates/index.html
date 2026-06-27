@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if section.extra.banner %}
+    {% include "partials/banner.html" %}
+  {% endif %}
+
+  {% if section.extra.features %}
+    {% include "partials/features.html" %}
+  {% endif %}
+
+  {% if section.extra.testimonials %}
+    {% include "partials/testimonials.html" %}
+  {% endif %}
+
+  {% if section.extra.cta %}
+    {% include "partials/cta.html" %}
+  {% endif %}
+{% endblock content %}

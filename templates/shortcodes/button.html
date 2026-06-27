@@ -1,0 +1,10 @@
+<a
+  href="{{ link }}"
+  class="btn mb-4 me-4 not-prose {% if style == 'outline' %}btn-outline-primary{% else %}btn-primary{% endif %} hover:no-underline"
+  {% if link is starting_with("http") %}
+    target="_blank"
+    rel="noopener"
+  {% endif %}
+>
+  {{ label }}
+</a>

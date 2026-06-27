@@ -1,0 +1,63 @@
+# Global settings
+settings_locale = "en"
+settings_date_locale = "en_US"
+settings_date_format = "%B %d, %Y"
+
+# General
+read_more = "Read more"
+previous = "Previous"
+next = "Next"
+minutes_read = "min read"
+breadcrumb_home = "Home"
+share_this = "Share this:"
+back_to_home = "Back to Home"
+not_found_title = "Page Not Found"
+not_found_description = "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
+atom_feed_title = "Atom Feed"
+
+# Search
+search_title = "Search"
+search_placeholder = "Search posts ..."
+search_no_results = "No results found"
+search_loading = "Loading search index ..."
+search_results_one = "Found {count} result"
+search_results_other = "Found {count} results"
+search_input_label = "Search posts"
+search_clear_label = "Clear search"
+search_pagination_label = "Search results pages"
+search_page_label = "Page"
+search_index_disabled = "Search index is disabled."
+search_error = "Search index could not be loaded."
+
+# Contact
+contact_name = "Full Name"
+contact_email = "Email Address"
+contact_subject = "Subject"
+contact_message = "Message"
+contact_submit = "Send Message"
+
+# Accessibility
+aria_toggle_theme = "Toggle dark/light mode"
+switch_light = "Switch to light mode"
+switch_dark = "Switch to dark mode"
+
+# Clipboard
+clipboard_copy = "Copy"
+clipboard_copied = "Copied"
+clipboard_error = "Error"
+
+[words]
+one = "word"
+other = "words"
+
+[minutes]
+one = "minute"
+other = "minutes"
+
+[tags]
+one = "tag"
+other = "tags"
+
+[posts]
+one = "post"
+other = "posts"

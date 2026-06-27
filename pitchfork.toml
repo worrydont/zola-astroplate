@@ -1,0 +1,5 @@
+# Background Tailwind CSS watcher for theme development.
+# Start with `pitchfork start css` (or `mise run dev`); the parent site's
+# `zola serve` then live-reloads as static/css/generated.css is rebuilt.
+[daemons.css]
+run = "npm run css:watch"

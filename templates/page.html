@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% include "partials/page-header.html" %}
+
+  <section class="section-sm">
+    <div class="container">
+      <div class="row justify-center">
+        <div class="lg:col-10">
+          <article class="content">
+            {{ page.content | safe }}
+          </article>
+
+          {% if page.extra.is_contact %}
+            <div class="mt-12">
+              <form action="#" method="POST" class="row g-3">
+                <div class="col-12 md:col-6 mb-4">
+                  <label for="name" class="form-label">{{ res.contact_name | default(value="Full Name") }}</label>
+                  <input type="text" id="name" name="name" class="form-input w-full" required>
+                </div>
+                <div class="col-12 md:col-6 mb-4">
+                  <label for="email" class="form-label">{{ res.contact_email | default(value="Email Address") }}</label>
+                  <input type="email" id="email" name="email" class="form-input w-full" required>
+                </div>
+                <div class="col-12 mb-4">
+                  <label for="subject" class="form-label">{{ res.contact_subject | default(value="Subject") }}</label>
+                  <input type="text" id="subject" name="subject" class="form-input w-full" required>
+                </div>
+                <div class="col-12 mb-4">
+                  <label for="message" class="form-label">{{ res.contact_message | default(value="Message") }}</label>
+                  <textarea id="message" name="message" class="form-input w-full" rows="6" required></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary">{{ res.contact_submit | default(value="Send Message") }}</button>
+                </div>
+              </form>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

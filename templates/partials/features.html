@@ -1,0 +1,41 @@
+{% for feature in section.extra.features %}
+  <section class="section-sm {% if loop.index0 % 2 == 0 %}bg-gradient{% endif %}">
+    <div class="container">
+      <div class="row items-center justify-between">
+        <div class="mb:md-0 mb-6 md:col-5 {% if loop.index0 % 2 != 0 %}md:order-2{% endif %}">
+          <img
+            src="{{ get_url(path=feature.image) }}"
+            height="480"
+            width="520"
+            alt="{{ feature.title }}"
+            class="mx-auto"
+          />
+        </div>
+        <div class="md:col-7 lg:col-6 {% if loop.index0 % 2 != 0 %}md:order-1{% endif %}">
+          <h2 class="mb-4">
+            {{ feature.title | markdown(inline=true) | safe }}
+          </h2>
+          <div class="mb-8 text-lg">
+            {{ feature.content | markdown(inline=true) | safe }}
+          </div>
+          <ul>
+            {% for bullet in feature.bulletpoints %}
+              <li class="relative mb-4 pl-6">
+                {# FaCheck icon #}
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>{{ bullet | markdown(inline=true) | safe }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+          {% if feature.button.enable %}
+            <a class="btn btn-primary mt-5" href="{{ feature.button.link }}">
+              {{ feature.button.label }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endfor %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% include "partials/page-header.html" %}
+
+  <section class="section">
+    <div class="container">
+      <div class="row gx-5">
+        <!-- blog posts -->
+        <div class="lg:col-8">
+          {% if paginator %}
+            <div class="row">
+              {% for page in paginator.pages %}
+                <div class="mb-14 md:col-6">
+                  {% include "partials/blog-card.html" %}
+                </div>
+              {% endfor %}
+            </div>
+
+            {% include "partials/pagination.html" %}
+          {% endif %}
+        </div>
+
+        <!-- sidebar -->
+        {% include "partials/post-sidebar.html" %}
+      </div>
+    </div>
+  </section>
+{% endblock content %}

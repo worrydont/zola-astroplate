@@ -1,0 +1,18 @@
+{
+  "name": "zola-astroplate",
+  "version": "1.0.0",
+  "description": "Tailwind v4 build scripts for the zola-astroplate theme",
+  "scripts": {
+    "css:build": "tailwindcss -i css/main.css -o static/css/generated.css --minify",
+    "css:watch": "tailwindcss -i css/main.css -o static/css/generated.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "latest",
+    "@tailwindcss/typography": "latest",
+    "tailwindcss": "latest"
+  },
+  "dependencies": {
+    "playwright": "^1.58.2",
+    "tailwind-bootstrap-grid": "^7.0.0"
+  }
+}

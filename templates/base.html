@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="{{ config.default_language }}">
+<head>
+  {# Initialize language resources #}
+  {% set res         = load_data(path=config.extra.path_language_resources ~ config.default_language ~ '.toml') %}
+  {% set locale      = res.settings_locale      | default(value="en")        %}
+  {% set date_locale = res.settings_date_locale | default(value="en_US")     %}
+  {% set date_format = res.settings_date_format | default(value="%B %d, %Y") %}
+
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="generator" content="{{ config.extra.generator | default(value='Zola') }}">
+
+  {% include "partials/seo.html" %}
+
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ config.extra.title }}</title>
+
+  {# Google Fonts #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600&family=Signika:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ get_url(path='/css/generated.css') }}">
+  <link rel="stylesheet" id="code-highlighting-light" href="{{ get_url(path='/giallo-light.css') }}">
+  <link rel="stylesheet" id="code-highlighting-dark" href="{{ get_url(path='/giallo-dark.css') }}" disabled>
+  
+  {% if config.extra.favicon_svg %}
+    <link rel="icon" href="{{ get_url(path=config.extra.favicon_svg) }}" />
+  {% endif %}
+
+  {% if config.generate_feeds %}
+    <link rel="alternate" type="application/atom+xml" title="{{ res.atom_feed_title }}" href="{{ get_url(path='/atom.xml') }}" />
+  {% endif %}
+
+  <script defer src="{{ get_url(path='/js/zola-astroplate/logic.js') }}"></script>
+  
+  {# Alpine.js #}
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  {% if page is defined and page.extra and page.extra.math %}
+    <link rel="stylesheet" href="{{ get_url(path='/js/katex/katex.min.css') }}">
+    <script defer src="{{ get_url(path='/js/katex/katex.min.js') }}"></script>
+    <script defer src="{{ get_url(path='/js/katex/contrib/auto-render.min.js') }}"></script>
+    <script defer src="{{ get_url(path='/js/katex-config.js') }}"></script>
+  {% endif %}
+  {% if page is defined and page.extra and page.extra.diagram %}
+    <script defer src="{{ get_url(path='/js/diagram/mermaid.min.js') }}"></script>
+    <script defer src="{{ get_url(path='/js/diagram/mermaid-config.js') }}"></script>
+  {% endif %}
+</head>
+<body>
+  {% include "partials/header.html" %}
+  <main id="main-content">
+    {% block content %}{% endblock content %}
+  </main>
+  {% include "partials/footer.html" %}
+</body>
+</html>

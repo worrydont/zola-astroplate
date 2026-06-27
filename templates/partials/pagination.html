@@ -1,0 +1,70 @@
+{% if paginator.number_pagers > 1 %}
+<nav class="flex items-center justify-center space-x-3 mt-8" aria-label="Pagination">
+  <!-- previous -->
+  {% if paginator.previous %}
+    <a
+      href="{{ paginator.previous }}"
+      class="rounded px-2 py-1.5 text-text-dark hover:bg-light dark:text-darkmode-text-dark dark:hover:bg-darkmode-light"
+    >
+      <span class="sr-only">Previous</span>
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" height="30" width="30">
+        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+    </a>
+  {% else %}
+    <span class="rounded px-2 py-1.5 text-text-light">
+      <span class="sr-only">Previous</span>
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" height="30" width="30">
+        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+    </span>
+  {% endif %}
+
+  <!-- page numbers -->
+  {% for pager in range(end=paginator.number_pagers) %}
+    {% set page_num = pager + 1 %}
+    {% if page_num == paginator.current_index %}
+      <span
+        aria-current="page"
+        class="rounded bg-primary px-4 py-2 text-white dark:bg-darkmode-primary dark:text-text-dark"
+      >
+        {{ page_num }}
+      </span>
+    {% elif page_num == 1 %}
+      <a
+        href="{{ paginator.first }}"
+        class="rounded px-4 py-2 text-text-dark hover:bg-light dark:text-darkmode-text-dark dark:hover:bg-darkmode-light"
+      >
+        {{ page_num }}
+      </a>
+    {% else %}
+      <a
+        href="{{ paginator.first }}page/{{ page_num }}/"
+        class="rounded px-4 py-2 text-text-dark hover:bg-light dark:text-darkmode-text-dark dark:hover:bg-darkmode-light"
+      >
+        {{ page_num }}
+      </a>
+    {% endif %}
+  {% endfor %}
+
+  <!-- next -->
+  {% if paginator.next %}
+    <a
+      href="{{ paginator.next }}"
+      class="rounded px-2 py-1.5 text-text-dark hover:bg-light dark:text-darkmode-text-dark dark:hover:bg-darkmode-light"
+    >
+      <span class="sr-only">Next</span>
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" height="30" width="30">
+        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+      </svg>
+    </a>
+  {% else %}
+    <span class="rounded px-2 py-1.5 text-text-light">
+      <span class="sr-only">Next</span>
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" height="30" width="30">
+        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+      </svg>
+    </span>
+  {% endif %}
+</nav>
+{% endif %}
