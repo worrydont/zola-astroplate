@@ -77,6 +77,73 @@ social_links = [
 Dark/light toggle icons are supplied via `[extra.displaymode.sun]` / `[extra.displaymode.moon]`
 (inline SVG). See this theme's source/demo site for a complete working `[extra]` block.
 
+## New-Site Scaffolding Checklist
+
+To spin up a new site from scratch using `zola-astroplate`:
+
+1. **Create and enter a new directory**:
+   ```bash
+   mkdir my-new-site && cd my-new-site
+   ```
+
+2. **Initialize Git repository**:
+   ```bash
+   git init
+   ```
+
+3. **Add the theme as a submodule**:
+   ```bash
+   git submodule add https://github.com/worrydont/zola-astroplate themes/zola-astroplate
+   ```
+
+4. **Create the initial site structure**:
+   ```bash
+   mkdir -p content templates static i18n
+   ```
+
+5. **Copy recommended initial configuration**:
+   Create a `zola.toml` in your site's root directory and paste the **Required / reference configuration** block shown above.
+
+6. **Initialize the homepage content**:
+   Create `content/_index.md` with homepage sections (you can copy the structure from the demo site's `content/_index.md` or start simple):
+   ```markdown
+   +++
+   title = "Home"
+   template = "index.html"
+   
+   [extra.banner]
+   enable = true
+   title = "Welcome to My New Site"
+   content = "Built with Zola and zola-astroplate theme."
+   +++
+   ```
+
+7. **Run the site locally**:
+   With `zola` installed on your system:
+   ```bash
+   zola serve
+   ```
+   Open `http://127.0.0.1:1111` in your browser.
+
+## Theme Customizer (Live White-labeling)
+
+The theme ships with a live-preview customizer modal to rapidly prototype colors, typography, and UI sections directly in the browser.
+
+To enable it during local development, add this to your `zola.toml`:
+
+```toml
+[extra.theme]
+customizer_enabled = true
+```
+
+**Workflow:**
+1. Run `zola serve` and open `http://127.0.0.1:1111` in your browser.
+2. Click the floating circular button in the bottom-right corner to open the customizer.
+3. Tweak your light/dark colors, fonts, and section visibility. 
+4. Click **Export Config (TOML)** at the bottom of the panel and paste the snippet directly into your `[extra.theme]` and `[extra.sections]` blocks to save your changes.
+
+> **⚠️ Production Warning:** Zola templates cannot natively detect if they are being built vs. served. You **must** manually set `customizer_enabled = false` before running your production `zola build`, otherwise the modal will ship to your live users.
+
 ## Customizing
 
 Override any theme file by creating a file with the same path in your site's `templates/` or

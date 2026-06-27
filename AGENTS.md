@@ -41,6 +41,7 @@ mise run stop        # stop the background watcher
 Then run `zola serve` from the consuming site to preview. Zola dev server uses port **1111**.
 
 ## Conventions / hard rules
+- **OpenSpec**: This project uses OpenSpec for feature work. Do not write code immediately; use `/opsx-explore` to discuss ideas, or `/opsx-propose` to create a plan and artifacts before implementing.
 - After changing Tailwind classes or `css/main.css`, **rebuild `generated.css`** and commit it.
 - Commit messages: **Conventional Commits** (`feat:`, `fix:`, `chore:` …). **No `Co-Authored-By` trailer.**
 - Don't add features, error handling, or abstractions that weren't requested.
