@@ -21,4 +21,4 @@
 ## 4. Wrap-up
 
 - [x] 4.1 Rebuild theme CSS only if needed (it is not for this change) and run `mise run check`.
-- [ ] 4.2 Commit in the theme submodule, then bump the submodule pointer in the site repo.
+- [x] 4.2 Commit in the theme submodule, then bump the submodule pointer in the site repo.
