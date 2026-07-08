@@ -41,6 +41,64 @@
   
 
 
+  
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+      <link href="https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family=Heebo:wght@400;600&amp;display=swap" rel="stylesheet">
+    
+    
+      <link href="https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family=Signika:wght@500;700&amp;display=swap" rel="stylesheet">
+    
+  
+
+  <style id="theme-override-styles">
+    :root {
+      
+      --color-primary: #121212;
+      
+      --color-body: #ffffff;
+      
+      --color-border: #eaeaea;
+      
+      --color-light: #f6f6f6;
+      
+      --color-dark: #040404;
+      
+      --color-text: #444444;
+      
+      --color-text-dark: #040404;
+      
+      --color-text-light: #717171;
+      
+      --font-primary: Heebo, sans-serif;
+      
+      --font-secondary: Signika, sans-serif;
+      
+    }
+    .dark {
+      
+      --color-darkmode-primary: #ffffff;
+      
+      --color-darkmode-body: #1c1c1c;
+      
+      --color-darkmode-border: #3E3E3E;
+      
+      --color-darkmode-light: #222222;
+      
+      --color-darkmode-dark: #ffffff;
+      
+      --color-darkmode-text: #B4AFB6;
+      
+      --color-darkmode-text-dark: #ffffff;
+      
+      --color-darkmode-text-light: #B4AFB6;
+      
+    }
+  </style>
+
 
   <link rel="stylesheet" id="code-highlighting-light" href="https://worrydont.github.io/zola-astroplate/giallo-light.css">
   <link rel="stylesheet" id="code-highlighting-dark" href="https://worrydont.github.io/zola-astroplate/giallo-dark.css" disabled>
@@ -70,55 +128,13 @@
     <div class="order-0">
       <a href="https://worrydont.github.io/zola-astroplate" class="navbar-brand block">
         
-          <img
-            src="https://worrydont.github.io/zola-astroplate/images/logo.png"
-            alt="zola-astroplate"
-            width="200"
-            height="40"
-            class="dark:hidden"
-          />
-          <img
-            src="https://worrydont.github.io/zola-astroplate/images/logo-darkmode.png"
-            alt="zola-astroplate"
-            width="200"
-            height="40"
-            class="hidden dark:block"
-          />
+          <span class="text-xl font-semibold text-text-dark dark:text-darkmode-text-dark">zola-astroplate</span>
         
       </a>
     </div>
 
     <!-- Navigation -->
     <ul id="nav-menu" class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8">
-      
-        
-          <li class="nav-item">
-            <a
-              href="https://worrydont.github.io/zola-astroplate"
-              class="nav-link block "
-            >
-              Home
-            </a>
-          </li>
-        
-          <li class="nav-item">
-            <a
-              href="https://worrydont.github.io/zola-astroplate/about"
-              class="nav-link block "
-            >
-              About
-            </a>
-          </li>
-        
-          <li class="nav-item">
-            <a
-              href="https://worrydont.github.io/zola-astroplate/blog"
-              class="nav-link block "
-            >
-              Blog
-            </a>
-          </li>
-        
       
     </ul>
 
@@ -181,38 +197,6 @@
     >
       <div class="container py-8">
         <ul class="space-y-4">
-          
-            
-              <li>
-                <a
-                  href="https://worrydont.github.io/zola-astroplate"
-                  class="nav-link block text-xl font-semibold text-text-dark dark:text-darkmode-text-dark"
-                  @click="mobileMenuOpen = false"
-                >
-                  Home
-                </a>
-              </li>
-            
-              <li>
-                <a
-                  href="https://worrydont.github.io/zola-astroplate/about"
-                  class="nav-link block text-xl font-semibold text-text-dark dark:text-darkmode-text-dark"
-                  @click="mobileMenuOpen = false"
-                >
-                  About
-                </a>
-              </li>
-            
-              <li>
-                <a
-                  href="https://worrydont.github.io/zola-astroplate/blog"
-                  class="nav-link block text-xl font-semibold text-text-dark dark:text-darkmode-text-dark"
-                  @click="mobileMenuOpen = false"
-                >
-                  Blog
-                </a>
-              </li>
-            
           
         </ul>
       </div>
@@ -305,18 +289,7 @@
         <!-- Logo -->
         <a href="https://worrydont.github.io/zola-astroplate" class="inline-block">
           
-            <img
-              src="https://worrydont.github.io/zola-astroplate/images/logo.png"
-              alt="zola-astroplate"
-              height="40"
-              class="dark:hidden"
-            />
-            <img
-              src="https://worrydont.github.io/zola-astroplate/images/logo-darkmode.png"
-              alt="zola-astroplate"
-              height="40"
-              class="hidden dark:block"
-            />
+            <span class="text-xl font-semibold text-text-dark dark:text-darkmode-text-dark">zola-astroplate</span>
           
         </a>
       </div>
@@ -324,35 +297,10 @@
         <!-- Footer Menu -->
         <ul>
           
-            
-              <li class="m-3 inline-block">
-                <a href="https://worrydont.github.io/zola-astroplate/about" class="text-text-dark hover:text-primary dark:text-darkmode-text-dark dark:hover:text-darkmode-primary">
-                  About
-                </a>
-              </li>
-            
-          
         </ul>
       </div>
       <div class="mb-8 text-center lg:col-3 lg:mb-0 lg:mt-0 lg:text-right">
         <!-- Social Icons -->
-        
-          <ul class="social-icons">
-            
-              
-                <li>
-                  <a
-                    href="https:&#x2F;&#x2F;github.com&#x2F;worrydont&#x2F;zola-astroplate"
-                    target="_blank"
-                    rel="noopener"
-                    aria-label="github"
-                  >
-                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 1024 1024"><path d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)"/></svg>
-                  </a>
-                </li>
-              
-            
-          </ul>
         
       </div>
     </div>

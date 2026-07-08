@@ -41,6 +41,64 @@
   
 
 
+  
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+      <link href="https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family=Heebo:wght@400;600&amp;display=swap" rel="stylesheet">
+    
+    
+      <link href="https:&#x2F;&#x2F;fonts.googleapis.com&#x2F;css2?family=Signika:wght@500;700&amp;display=swap" rel="stylesheet">
+    
+  
+
+  <style id="theme-override-styles">
+    :root {
+      
+      --color-primary: #121212;
+      
+      --color-body: #ffffff;
+      
+      --color-border: #eaeaea;
+      
+      --color-light: #f6f6f6;
+      
+      --color-dark: #040404;
+      
+      --color-text: #444444;
+      
+      --color-text-dark: #040404;
+      
+      --color-text-light: #717171;
+      
+      --font-primary: Heebo, sans-serif;
+      
+      --font-secondary: Signika, sans-serif;
+      
+    }
+    .dark {
+      
+      --color-darkmode-primary: #ffffff;
+      
+      --color-darkmode-body: #1c1c1c;
+      
+      --color-darkmode-border: #3E3E3E;
+      
+      --color-darkmode-light: #222222;
+      
+      --color-darkmode-dark: #ffffff;
+      
+      --color-darkmode-text: #B4AFB6;
+      
+      --color-darkmode-text-dark: #ffffff;
+      
+      --color-darkmode-text-light: #B4AFB6;
+      
+    }
+  </style>
+
 
   <link rel="stylesheet" id="code-highlighting-light" href="https://worrydont.github.io/zola-astroplate/giallo-light.css">
   <link rel="stylesheet" id="code-highlighting-dark" href="https://worrydont.github.io/zola-astroplate/giallo-dark.css" disabled>
@@ -72,55 +130,13 @@
     <div class="order-0">
       <a href="https://worrydont.github.io/zola-astroplate" class="navbar-brand block">
         
-          <img
-            src="https://worrydont.github.io/zola-astroplate/images/logo.png"
-            alt="zola-astroplate"
-            width="200"
-            height="40"
-            class="dark:hidden"
-          />
-          <img
-            src="https://worrydont.github.io/zola-astroplate/images/logo-darkmode.png"
-            alt="zola-astroplate"
-            width="200"
-            height="40"
-            class="hidden dark:block"
-          />
+          <span class="text-xl font-semibold text-text-dark dark:text-darkmode-text-dark">zola-astroplate</span>
         
       </a>
     </div>
 
     <!-- Navigation -->
     <ul id="nav-menu" class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8">
-      
-        
-          <li class="nav-item">
-            <a
-              href="https://worrydont.github.io/zola-astroplate"
-              class="nav-link block active"
-            >
-              Home
-            </a>
-          </li>
-        
-          <li class="nav-item">
-            <a
-              href="https://worrydont.github.io/zola-astroplate/about"
-              class="nav-link block "
-            >
-              About
-            </a>
-          </li>
-        
-          <li class="nav-item">
-            <a
-              href="https://worrydont.github.io/zola-astroplate/blog"
-              class="nav-link block "
-            >
-              Blog
-            </a>
-          </li>
-        
       
     </ul>
 
@@ -183,38 +199,6 @@
     >
       <div class="container py-8">
         <ul class="space-y-4">
-          
-            
-              <li>
-                <a
-                  href="https://worrydont.github.io/zola-astroplate"
-                  class="nav-link block text-xl font-semibold active text-primary"
-                  @click="mobileMenuOpen = false"
-                >
-                  Home
-                </a>
-              </li>
-            
-              <li>
-                <a
-                  href="https://worrydont.github.io/zola-astroplate/about"
-                  class="nav-link block text-xl font-semibold text-text-dark dark:text-darkmode-text-dark"
-                  @click="mobileMenuOpen = false"
-                >
-                  About
-                </a>
-              </li>
-            
-              <li>
-                <a
-                  href="https://worrydont.github.io/zola-astroplate/blog"
-                  class="nav-link block text-xl font-semibold text-text-dark dark:text-darkmode-text-dark"
-                  @click="mobileMenuOpen = false"
-                >
-                  Blog
-                </a>
-              </li>
-            
           
         </ul>
       </div>
@@ -285,6 +269,213 @@
   
 
   
+    <div id="section-features">
+      
+        
+  <section class="section-sm bg-gradient">
+    <div class="container">
+      <div class="row items-center justify-between">
+        <div class="mb:md-0 mb-6 md:col-5 ">
+          <img
+            src="https://worrydont.github.io/zola-astroplate/images/service-1.png"
+            height="480"
+            width="520"
+            alt="What&#x27;s Included in zola-astroplate"
+            class="mx-auto"
+          />
+        </div>
+        <div class="md:col-7 lg:col-6 ">
+          <h2 class="mb-4">
+            What's Included in zola-astroplate
+          </h2>
+          <div class="mb-8 text-lg">
+            zola-astroplate is a comprehensive starter theme that includes everything you need to get started with Zola.
+          </div>
+          <ul>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>10+ pre-built pages</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Tailwind CSS v4 integration</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Alpine.js for interactivity</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Fully responsive on all devices</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>SEO-optimized</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span><strong>Open-source and free</strong></span>
+              </li>
+            
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm ">
+    <div class="container">
+      <div class="row items-center justify-between">
+        <div class="mb:md-0 mb-6 md:col-5 md:order-2">
+          <img
+            src="https://worrydont.github.io/zola-astroplate/images/service-2.png"
+            height="480"
+            width="520"
+            alt="Discover the Key Features Of Zola"
+            class="mx-auto"
+          />
+        </div>
+        <div class="md:col-7 lg:col-6 md:order-1">
+          <h2 class="mb-4">
+            Discover the Key Features Of Zola
+          </h2>
+          <div class="mb-8 text-lg">
+            Zola is a fast, all-in-one static site generator. It offers a range of exciting features for developers and creators.
+          </div>
+          <ul>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Single executable, no dependencies</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Extremely fast builds</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Tera templates (Jinja2-like)</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Built-in search and taxonomies</span>
+              </li>
+            
+          </ul>
+          
+            <a class="btn btn-primary mt-5" href="https:&#x2F;&#x2F;getzola.org">
+              Learn More
+            </a>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm bg-gradient">
+    <div class="container">
+      <div class="row items-center justify-between">
+        <div class="mb:md-0 mb-6 md:col-5 ">
+          <img
+            src="https://worrydont.github.io/zola-astroplate/images/service-3.png"
+            height="480"
+            width="520"
+            alt="The Top Reasons to Choose zola-astroplate for Your Next Project"
+            class="mx-auto"
+          />
+        </div>
+        <div class="md:col-7 lg:col-6 ">
+          <h2 class="mb-4">
+            The Top Reasons to Choose zola-astroplate for Your Next Project
+          </h2>
+          <div class="mb-8 text-lg">
+            With zola-astroplate, you can build modern and content-focused websites without sacrificing performance or ease of use.
+          </div>
+          <ul>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Instantly loading static sites for better user experience and SEO.</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Intuitive syntax and support for popular frameworks make learning and using Zola a breeze.</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Use any front-end library or framework, or build custom components, for any project size.</span>
+              </li>
+            
+              <li class="relative mb-4 pl-6">
+                
+                <svg class="absolute left-0 top-1.5 h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                  <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                </svg>
+                <span>Built on cutting-edge technology to keep your projects up-to-date with the latest web standards.</span>
+              </li>
+            
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+    </div>
+  
 
   
   
@@ -292,7 +483,126 @@
     
   
   
+    
+  
 
+  
+    <div id="section-testimonials">
+      
+        
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="mx-auto mb-12 text-center md:col-10 lg:col-8 xl:col-6">
+        <h2 class="mb-4">
+          What Users Are Saying
+        </h2>
+        <p>
+          Don't just take our word for it - hear from some of our satisfied users!
+        </p>
+      </div>
+      <div class="col-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+            <div class="rounded-lg bg-light px-7 py-10 dark:bg-darkmode-light">
+              <div class="text-text-dark dark:text-white">
+                <svg width="33" height="20" viewBox="0 0 33 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.28375 19.41L0.79375 18.64C1.21375 17.0067 1.75042 15.07 2.40375 12.83C3.05708 10.5433 3.75708 8.28 4.50375 6.04C5.29708 3.75333 6.06708 1.77 6.81375 0.0899959H15.3538C14.9338 2.09666 14.4904 4.26667 14.0238 6.6C13.5571 8.88666 13.1371 11.15 12.7638 13.39C12.4371 15.5833 12.1571 17.59 11.9238 19.41H1.28375ZM31.69 0.0899959L32.18 0.859998C31.76 2.54 31.2233 4.5 30.57 6.74C29.9167 8.98 29.2167 11.2433 28.47 13.53C27.7233 15.77 26.9533 17.73 26.16 19.41H17.69C18.0167 17.9167 18.3433 16.33 18.67 14.65C18.9967 12.9233 19.3 11.22 19.58 9.54C19.9067 7.81333 20.1867 6.15667 20.42 4.57C20.7 2.93666 20.91 1.44333 21.05 0.0899959H31.69Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <blockquote class="mt-8">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui iusto illo molestias, assumenda expedita commodi inventore non itaque molestiae voluptatum dolore, facilis sapiente, repellat veniam.
+              </blockquote>
+              <div class="mt-11 flex items-center">
+                <div class="text-text-dark dark:text-white">
+                  <img
+                    height="50"
+                    width="50"
+                    class="rounded-full"
+                    src="https://worrydont.github.io/zola-astroplate/images/avatar-sm.png"
+                    alt="Marvin McKinney"
+                  />
+                </div>
+                <div class="ml-4">
+                  <h3 class="h5 font-primary font-semibold">
+                    Marvin McKinney
+                  </h3>
+                  <p class="text-text-dark dark:text-white">
+                    Web Designer
+                  </p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="rounded-lg bg-light px-7 py-10 dark:bg-darkmode-light">
+              <div class="text-text-dark dark:text-white">
+                <svg width="33" height="20" viewBox="0 0 33 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.28375 19.41L0.79375 18.64C1.21375 17.0067 1.75042 15.07 2.40375 12.83C3.05708 10.5433 3.75708 8.28 4.50375 6.04C5.29708 3.75333 6.06708 1.77 6.81375 0.0899959H15.3538C14.9338 2.09666 14.4904 4.26667 14.0238 6.6C13.5571 8.88666 13.1371 11.15 12.7638 13.39C12.4371 15.5833 12.1571 17.59 11.9238 19.41H1.28375ZM31.69 0.0899959L32.18 0.859998C31.76 2.54 31.2233 4.5 30.57 6.74C29.9167 8.98 29.2167 11.2433 28.47 13.53C27.7233 15.77 26.9533 17.73 26.16 19.41H17.69C18.0167 17.9167 18.3433 16.33 18.67 14.65C18.9967 12.9233 19.3 11.22 19.58 9.54C19.9067 7.81333 20.1867 6.15667 20.42 4.57C20.7 2.93666 20.91 1.44333 21.05 0.0899959H31.69Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <blockquote class="mt-8">
+                zola-astroplate is exactly what I needed. Fast, clean, and easy to customize.
+              </blockquote>
+              <div class="mt-11 flex items-center">
+                <div class="text-text-dark dark:text-white">
+                  <img
+                    height="50"
+                    width="50"
+                    class="rounded-full"
+                    src="https://worrydont.github.io/zola-astroplate/images/avatar-sm.png"
+                    alt="Jane Cooper"
+                  />
+                </div>
+                <div class="ml-4">
+                  <h3 class="h5 font-primary font-semibold">
+                    Jane Cooper
+                  </h3>
+                  <p class="text-text-dark dark:text-white">
+                    Developer
+                  </p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="rounded-lg bg-light px-7 py-10 dark:bg-darkmode-light">
+              <div class="text-text-dark dark:text-white">
+                <svg width="33" height="20" viewBox="0 0 33 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.28375 19.41L0.79375 18.64C1.21375 17.0067 1.75042 15.07 2.40375 12.83C3.05708 10.5433 3.75708 8.28 4.50375 6.04C5.29708 3.75333 6.06708 1.77 6.81375 0.0899959H15.3538C14.9338 2.09666 14.4904 4.26667 14.0238 6.6C13.5571 8.88666 13.1371 11.15 12.7638 13.39C12.4371 15.5833 12.1571 17.59 11.9238 19.41H1.28375ZM31.69 0.0899959L32.18 0.859998C31.76 2.54 31.2233 4.5 30.57 6.74C29.9167 8.98 29.2167 11.2433 28.47 13.53C27.7233 15.77 26.9533 17.73 26.16 19.41H17.69C18.0167 17.9167 18.3433 16.33 18.67 14.65C18.9967 12.9233 19.3 11.22 19.58 9.54C19.9067 7.81333 20.1867 6.15667 20.42 4.57C20.7 2.93666 20.91 1.44333 21.05 0.0899959H31.69Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <blockquote class="mt-8">
+                The visual design is stunning and it performs incredibly well.
+              </blockquote>
+              <div class="mt-11 flex items-center">
+                <div class="text-text-dark dark:text-white">
+                  <img
+                    height="50"
+                    width="50"
+                    class="rounded-full"
+                    src="https://worrydont.github.io/zola-astroplate/images/avatar-sm.png"
+                    alt="Esther Howard"
+                  />
+                </div>
+                <div class="ml-4">
+                  <h3 class="h5 font-primary font-semibold">
+                    Esther Howard
+                  </h3>
+                  <p class="text-text-dark dark:text-white">
+                    Content Creator
+                  </p>
+                </div>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      
+    </div>
   
 
   
@@ -301,7 +611,50 @@
     
   
   
+    
+  
 
+  
+    <div id="section-cta">
+      
+        
+<section class="mb-28">
+  <div class="container">
+    <div class="rounded-xl bg-light px-4 py-16 dark:bg-darkmode-light xl:p-20">
+      <div class="row items-center justify-between">
+        <div class="mb-10 md:col-5 lg:col-4 md:order-2 md:mb-0">
+          <img
+            class="w-full mx-auto"
+            src="https://worrydont.github.io/zola-astroplate/images/call-to-action.png"
+            width="392"
+            height="390"
+            alt="cta-image"
+          />
+        </div>
+        <div class="md:col-7 md:order-1">
+          <h2 class="mb-2">
+            Ready to build your next project?
+          </h2>
+          <p class="mb-6">
+            Experience the future of web development with Zola. Build lightning-fast static sites with ease and flexibility.
+          </p>
+          
+            <a
+              class="btn btn-primary"
+              href="&#x2F;pages&#x2F;elements"
+            >
+              Get Started Now
+            </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      
+    </div>
   
 
 
@@ -313,18 +666,7 @@
         <!-- Logo -->
         <a href="https://worrydont.github.io/zola-astroplate" class="inline-block">
           
-            <img
-              src="https://worrydont.github.io/zola-astroplate/images/logo.png"
-              alt="zola-astroplate"
-              height="40"
-              class="dark:hidden"
-            />
-            <img
-              src="https://worrydont.github.io/zola-astroplate/images/logo-darkmode.png"
-              alt="zola-astroplate"
-              height="40"
-              class="hidden dark:block"
-            />
+            <span class="text-xl font-semibold text-text-dark dark:text-darkmode-text-dark">zola-astroplate</span>
           
         </a>
       </div>
@@ -332,35 +674,10 @@
         <!-- Footer Menu -->
         <ul>
           
-            
-              <li class="m-3 inline-block">
-                <a href="https://worrydont.github.io/zola-astroplate/about" class="text-text-dark hover:text-primary dark:text-darkmode-text-dark dark:hover:text-darkmode-primary">
-                  About
-                </a>
-              </li>
-            
-          
         </ul>
       </div>
       <div class="mb-8 text-center lg:col-3 lg:mb-0 lg:mt-0 lg:text-right">
         <!-- Social Icons -->
-        
-          <ul class="social-icons">
-            
-              
-                <li>
-                  <a
-                    href="https:&#x2F;&#x2F;github.com&#x2F;worrydont&#x2F;zola-astroplate"
-                    target="_blank"
-                    rel="noopener"
-                    aria-label="github"
-                  >
-                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 1024 1024"><path d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)"/></svg>
-                  </a>
-                </li>
-              
-            
-          </ul>
         
       </div>
     </div>
