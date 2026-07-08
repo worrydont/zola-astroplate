@@ -5,6 +5,15 @@
   {% set current_path = section.path %}
 {% endif %}
 
+{# Navigation source resolution: config.extra.menu_pages is the default; an optional
+   root navigation.toml (load_data required=false) overrides it when present. Items are
+   normalized to { title, url } so alternate field names (name/path) still render. #}
+{% set nav_data = load_data(path="navigation.toml", required=false) %}
+{% set raw_menu = config.extra.menu_pages | default(value=[]) %}
+{% if nav_data and nav_data.menu_pages %}
+  {% set raw_menu = nav_data.menu_pages %}
+{% endif %}
+
 <header class="header z-30 sticky top-0 bg-body dark:bg-darkmode-body" x-data="{ mobileMenuOpen: false }">
   <nav class="navbar container">
     <!-- Logo -->
@@ -31,21 +40,23 @@
       </a>
     </div>
 
+    {% block navigation %}
     <!-- Navigation -->
     <ul id="nav-menu" class="navbar-nav order-3 hidden w-full pb-6 lg:order-1 lg:flex lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8">
-      {% if config.extra.menu_pages %}
-        {% for menu in config.extra.menu_pages %}
-          <li class="nav-item">
-            <a
-              href="{{ get_url(path=menu.url) }}"
-              class="nav-link block {% if menu.url == current_path %}active{% endif %}"
-            >
-              {{ menu.title }}
-            </a>
-          </li>
-        {% endfor %}
-      {% endif %}
+      {% for menu in raw_menu %}
+        {% set nav_title = menu.title | default(value=menu.name) %}
+        {% set nav_url = menu.url | default(value=menu.path) %}
+        <li class="nav-item">
+          <a
+            href="{{ get_url(path=nav_url) }}"
+            class="nav-link block {% if nav_url == current_path %}active{% endif %}"
+          >
+            {{ nav_title }}
+          </a>
+        </li>
+      {% endfor %}
     </ul>
+    {% endblock navigation %}
 
     <!-- Actions -->
     <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
@@ -95,21 +106,23 @@
       style="display: none;"
     >
       <div class="container py-8">
+        {% block navigation_mobile %}
         <ul class="space-y-4">
-          {% if config.extra.menu_pages %}
-            {% for menu in config.extra.menu_pages %}
-              <li>
-                <a
-                  href="{{ get_url(path=menu.url) }}"
-                  class="nav-link block text-xl font-semibold {% if menu.url == current_path %}active text-primary{% else %}text-text-dark dark:text-darkmode-text-dark{% endif %}"
-                  @click="mobileMenuOpen = false"
-                >
-                  {{ menu.title }}
-                </a>
-              </li>
-            {% endfor %}
-          {% endif %}
+          {% for menu in raw_menu %}
+            {% set nav_title = menu.title | default(value=menu.name) %}
+            {% set nav_url = menu.url | default(value=menu.path) %}
+            <li>
+              <a
+                href="{{ get_url(path=nav_url) }}"
+                class="nav-link block text-xl font-semibold {% if nav_url == current_path %}active text-primary{% else %}text-text-dark dark:text-darkmode-text-dark{% endif %}"
+                @click="mobileMenuOpen = false"
+              >
+                {{ nav_title }}
+              </a>
+            </li>
+          {% endfor %}
         </ul>
+        {% endblock navigation_mobile %}
       </div>
     </div>
   </nav>

@@ -38,6 +38,25 @@ taxonomies (tags, categories).
 under `[extra.displaymode.sun]` / `[extra.displaymode.moon]`. Taxonomies: `tags`, `categories`.
 See `README.md` for a complete reference block.
 
+**TOML gotcha:** keys under `[extra]` (e.g. `menu_pages`) must appear **before** any `[extra.xxx]`
+sub-table header in the same file, or TOML silently nests them under that sub-table instead. The
+demo's own root `config.toml` has this exact bug today (`menu_pages`/`footer_pages`/`social_links`
+/`logo*` end up under `[extra.theme]`) — pre-existing, unrelated to block-overrides/navigation-sources
+work; fix by moving those keys above `[extra.theme]`.
+
+## Template Block Overrides, Navigation Sources, Context Inspector
+- Home sections (`section_banner`, `section_features`, `section_testimonials`, `section_cta` in
+  `templates/index.html`) and navigation (`navigation`, `navigation_mobile` in
+  `templates/partials/header.html`) are wrapped in named Tera blocks. A consuming site extends the
+  theme template and redefines only the block it wants to change — see `README.md` →
+  "Template Block Overrides".
+- Navigation resolves `config.extra.menu_pages` (default) → root `navigation.toml`
+  (`load_data(required=false)`, wins if present) → block override (wins over both). Items
+  normalize to `{ title, url }` (`name`/`path` also accepted). `navigation.toml` must live at the
+  **consuming site's root**, not inside the theme.
+- The dev customizer (`partials/customizer.html`, `ZOLA_ENV=dev`-gated) has a **Context** tab that
+  pretty-prints `page`/`section`/`config` as JSON. No new dev-gate flag was added.
+
 ## Develop (mise tasks — Zola + Node auto-provisioned from `mise.toml`)
 ```bash
 mise run setup       # npm install (Tailwind v4 deps)

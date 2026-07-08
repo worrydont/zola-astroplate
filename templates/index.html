@@ -3,8 +3,16 @@
 
 {% block content %}
   {% set is_dev = get_env(name="ZOLA_ENV", default="") == "dev" %}
-  {{ section_macros::render(id="banner", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
-  {{ section_macros::render(id="features", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
-  {{ section_macros::render(id="testimonials", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
-  {{ section_macros::render(id="cta", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
+  {% block section_banner %}
+    {{ section_macros::render(id="banner", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
+  {% endblock section_banner %}
+  {% block section_features %}
+    {{ section_macros::render(id="features", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
+  {% endblock section_features %}
+  {% block section_testimonials %}
+    {{ section_macros::render(id="testimonials", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
+  {% endblock section_testimonials %}
+  {% block section_cta %}
+    {{ section_macros::render(id="cta", config_sections=config.extra.sections | default(value=false), section_extra=section.extra | default(value=false), dev=is_dev) }}
+  {% endblock section_cta %}
 {% endblock content %}

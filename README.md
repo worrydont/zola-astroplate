@@ -207,6 +207,54 @@ In a production build (`mise run build`) a disabled section is **completely abse
 generated HTML — no wrapper, no content. Existing sites with no `[extra.sections]` block continue
 to render all sections unchanged.
 
+## Template Block Overrides
+
+Home sections and navigation are wrapped in named Tera blocks so a consuming site can override a
+single piece without replacing the whole template. Create a `templates/index.html` (or
+`templates/partials/header.html`) in your site that extends the theme's version and redefines only
+the block you need:
+
+```jinja
+{% extends "zola-astroplate/templates/index.html" %}
+
+{% block section_features %}
+  <div>Your custom features markup</div>
+{% endblock section_features %}
+```
+
+Available blocks:
+
+- `section_banner`, `section_features`, `section_testimonials`, `section_cta` — in
+  `templates/index.html`, one per homepage section.
+- `navigation` (desktop) and `navigation_mobile` (mobile) — in `templates/partials/header.html`.
+
+Overriding a block leaves every other block at the theme default — no other markup changes.
+
+## Navigation Sources
+
+Navigation resolves from tiered sources, in increasing precedence:
+
+1. **`config.extra.menu_pages`** (built-in default) — the `menu_pages` array under `[extra]` in
+   your site's `config.toml`.
+2. **A root `navigation.toml`** — an optional file at your **site root** (next to `config.toml`,
+   not inside the theme), loaded via `load_data(path="navigation.toml", required=false)`. If
+   present, it **overrides** `config.extra.menu_pages` entirely. If absent, the build does not
+   error and the config default is used.
+3. **`{% block navigation %}` / `{% block navigation_mobile %}` override** — a site template that
+   extends `templates/partials/header.html` and redefines these blocks supersedes both of the
+   above.
+
+All sources normalize to `{ title, url }` before rendering, so a `navigation.toml` using
+alternate field names (`name`/`path`) still renders correctly:
+
+```toml
+# navigation.toml (site root)
+menu_pages = [
+    { name = "Home", path = "/" },
+    { name = "Blog", path = "/blog/" },
+]
+```
+
 ## Live Customizer (dev only)
 
 The theme ships a floating customizer panel for rapid brand prototyping directly in the browser.
@@ -219,7 +267,8 @@ completely absent from `mise run build` output — it cannot accidentally ship t
 
 1. `mise run serve` — starts the Zola dev server in the background via pitchfork; ready at `http://127.0.0.1:1111`. Use `mise run stop` to stop it.
 2. Click the floating button in the bottom-right corner to open the panel.
-3. Switch tabs to adjust **Light mode**, **Dark mode**, **Fonts**, or **Sections**. Changes apply
+3. Switch tabs to adjust **Light mode**, **Dark mode**, **Fonts**, **Sections**, or inspect
+   **Context**. Changes apply
    live and **persist across page refreshes** within the same browser tab (stored in
    `sessionStorage`).
 4. Click **Export TOML** to copy a ready-to-paste config snippet.
@@ -227,6 +276,13 @@ completely absent from `mise run build` output — it cannot accidentally ship t
    commit the changes.
 6. Click **Reset** to clear the working draft and revert to whatever `zola.toml` currently
    configures (or Tailwind defaults if nothing is set).
+
+### Context tab (dev-only inspector)
+
+The **Context** tab pretty-prints the current template's `page`, `section`, and `config` objects
+as JSON, to make it easy to see what data is available while building or overriding templates.
+Like the rest of the customizer, it reuses the existing `ZOLA_ENV=dev` gate — no separate flag —
+and is never emitted in a production build.
 
 ### Session persistence
 

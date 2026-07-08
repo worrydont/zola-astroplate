@@ -8,3 +8,8 @@ tags = ["blog", "tailwind", "astroplate"]
 [author]
 name = "WorryDont"
 homepage = "https://worrydont.com"
+
+[original]
+author = "Zeon Studio"
+homepage = "https://astroplate.zeon.studio/"
+repo = "https://github.com/zeon-studio/astroplate"
