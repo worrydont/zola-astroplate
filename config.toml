@@ -34,6 +34,33 @@ copyright = "Copyright {year} by zola-astroplate"
 author = { name = "zola-astroplate", homepage = "https://github.com/worrydont/zola-astroplate" }
 path_language_resources = "i18n/"
 
+[extra.theme]
+# Default light mode colors
+primary = "#121212"
+body = "#ffffff"
+border = "#eaeaea"
+light = "#f6f6f6"
+dark = "#040404"
+text = "#444444"
+text_dark = "#040404"
+text_light = "#717171"
+
+# Dark mode colors
+darkmode_primary = "#ffffff"
+darkmode_body = "#1c1c1c"
+darkmode_border = "#3E3E3E"
+darkmode_light = "#222222"
+darkmode_dark = "#ffffff"
+darkmode_text = "#B4AFB6"
+darkmode_text_dark = "#ffffff"
+darkmode_text_light = "#B4AFB6"
+
+# Fonts
+font_primary = "Heebo, sans-serif"
+font_secondary = "Signika, sans-serif"
+font_primary_link = "https://fonts.googleapis.com/css2?family=Heebo:wght@400;600&display=swap"
+font_secondary_link = "https://fonts.googleapis.com/css2?family=Signika:wght@500;700&display=swap"
+
 # The main navigation menu
 menu_pages = [
     { title = "Home", url = "/" },
