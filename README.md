@@ -9,6 +9,40 @@ built on the Zolarwind architecture. Tailwind v4, i18n, client-side search, dark
 
 ![zola-astroplate screenshot](screenshot.png)
 
+## Live Demo
+
+A live demo is published to GitHub Pages: **https://worrydont.github.io/zola-astroplate/**
+
+The demo is built straight from this repository — the repo root doubles as a minimal Zola site
+that uses the theme as its own theme, so it also serves as a build-time smoke test on every push.
+
+### How the self-hosting demo works
+
+- Root `config.toml` sets `theme = "zola-astroplate"` and a small `content/` tree (home,
+  `blog/` + one post, and an `about` page) drives the build.
+- A committed symlink `themes/zola-astroplate -> ..` lets Zola resolve the theme to the repo itself,
+  so no template files are duplicated.
+- `compile_sass = false`; the demo reuses the committed `static/css/generated.css` (no Tailwind
+  build required).
+
+### Build the demo locally
+
+Requires Zola `0.22.1` (pinned in `mise.toml`). From a **standalone checkout** of this repo:
+
+```bash
+zola build             # output at ./public
+zola serve             # live preview at http://127.0.0.1:1111
+```
+
+> **Nested-submodule caveat:** when this repo is checked out as a submodule *inside* the consuming
+> Zola site (`worrydont-zola`), the `themes/zola-astroplate -> ..` self-theme symlink lets Zola
+> resolve the site root to the parent site, so a build run from that nested path builds the parent
+> site instead of the demo. Preview the demo from a standalone clone. CI always uses a standalone
+> checkout, so this does not affect deployment.
+>
+> The deploy workflow (`.github/workflows/deploy-gh-pages.yml`) builds with `zola build -o public`
+> and publishes `public/` to the `gh-pages` branch via `peaceiris/actions-gh-pages`.
+
 ## Install
 
 As a git submodule (recommended — easy updates):

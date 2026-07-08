@@ -7,8 +7,16 @@ taxonomies (tags, categories).
 ## Two-repo model (read first)
 - This repo (`worrydont/zola-astroplate`, public) is the **theme** and is consumed as a **git
   submodule** at `themes/zola-astroplate` inside the site repo `worrydont/worrydont-zola` (private).
-- The theme is **NOT servable on its own** — it has no `config.toml`/`content/`. Always preview it
-  through a consuming site's `zola serve`.
+- The repo root **also doubles as a self-hosted demo site** (root `config.toml` + `content/` + a
+  `themes/zola-astroplate -> ..` self-theme symlink) that publishes to GitHub Pages via
+  `.github/workflows/deploy-gh-pages.yml`. The demo is intentionally minimal — do NOT confuse it
+  with the consuming site (`worrydont-zola`).
+- Build/preview the demo from a **standalone checkout** (`zola build` / `zola serve`). Caveat: when
+  this repo sits as a submodule inside the consuming site, the `themes/zola-astroplate -> ..`
+  self-theme symlink makes Zola resolve the root to the *parent* site, so a build from the nested
+  path builds the parent, not the demo. CI checks out standalone, so deploys are unaffected. The
+  workflow uses `zola build -o public` and does **not** rebuild CSS (`compile_sass = false`;
+  committed `static/css/generated.css`).
 - Workflow when developing the theme: edit here → Tailwind rebuilds `static/css/generated.css` →
   the site's `zola serve` live-reloads. Commit + push here, then bump the submodule pointer in the site.
 
