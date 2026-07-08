@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/about/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/blog/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/blog/hello-world/</loc>
+        <lastmod>2026-07-08</lastmod>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/blog/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/categories/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/categories/announcements/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/categories/announcements/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/tags/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/tags/demo/</loc>
+    </url>
+    <url>
+        <loc>https://worrydont.github.io/zola-astroplate/tags/demo/page/1/</loc>
+    </url>
+</urlset>

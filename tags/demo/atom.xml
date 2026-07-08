@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - demo</title>
+    <link rel="self" type="application/atom+xml" href="https://worrydont.github.io/zola-astroplate/tags/demo/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://worrydont.github.io/zola-astroplate/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-07-08T00:00:00+00:00</updated>
+    <id>https://worrydont.github.io/zola-astroplate/tags/demo/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Hello, zola-astroplate</title>
+        <published>2026-07-08T00:00:00+00:00</published>
+        <updated>2026-07-08T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            zola-astroplate
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://worrydont.github.io/zola-astroplate/blog/hello-world/"/>
+        <id>https://worrydont.github.io/zola-astroplate/blog/hello-world/</id>
+        
+        <content type="html" xml:base="https://worrydont.github.io/zola-astroplate/blog/hello-world/">&lt;p&gt;Welcome to the &lt;strong&gt;zola-astroplate&lt;&#x2F;strong&gt; theme demo. This blog post exists to exercise the theme&#x27;s blog
+list and blog post templates as part of the self-hosted demo site.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;what-this-demo-shows&quot;&gt;What this demo shows&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The home page banner section&lt;&#x2F;li&gt;
+&lt;li&gt;The blog list and pagination&lt;&#x2F;li&gt;
+&lt;li&gt;A single blog post with tags and categories&lt;&#x2F;li&gt;
+&lt;li&gt;A standalone page (see &lt;a href=&quot;&#x2F;about&#x2F;&quot;&gt;About&lt;&#x2F;a&gt;)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+</feed>
